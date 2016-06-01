@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brew Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/user.style.css">
+    <link rel="stylesheet" type="text/css" href="css/spotterstyle.css">
+    <link href="fonts/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" type="text/css">
+
+  </head>
+  <body>
+    <div id="outer-wrapper">
+        <!-- Inner Wrapper -->
+        <div id="inner-wrapper">
+            <!-- Page Canvas-->
+            <div id="page-canvas">
+                <!--Off Canvas Navigation-->
+                <nav class="off-canvas-navigation">
+                    <header>Navigation</header>
+                    <div class="main-navigation navigation-off-canvas"></div>
+                </nav>
+                <!--end Off Canvas Navigation-->
+                <!--Page Content-->
+                <div id="page-content">
+                <!-- Map Canvas-->
+                <div class="map-canvas list-width-20">
+                    <!-- Map -->
+                    <div class="map">
+                        <!--/.toggle-navigation-->
+                        <div id="map" class="has-parallax"></div>
+                        <!--/#map-->
+                        <div class="search-bar horizontal">
+                            <form class="main-search border-less-inputs" role="form" method="post">
+                                <div class="input-row">
+                                    <!-- /.form-group -->
+                                    <div class="form-group">
+                                        <div class="input-group location">
+                                            <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-map-marker geolocation" data-toggle="tooltip" data-placement="bottom" title="Find breweries near me!">
+                                                </i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <!-- /.input-row -->
+                            </form>
+                            <!-- /.main-search -->
+                        </div>
+                        <!-- /.search-bar -->
+                    </div>
+                    <!-- end Map -->
+                    <!--Items List-->
+                    <div class="items-list">
+                        <div class="inner">
+                            <header>
+                                <h3>Breweries</h3>
+                            </header>
+                            <ul class="results list">
+
+                            </ul>
+                        </div>
+                        <!--results-->
+                    </div>
+                    <!--end Items List-->
+                </div>
+                <!-- end Map Canvas-->
+                </div>
+                <!-- end Page Content-->
+            </div>
+            <!-- end Page Canvas-->
+        </div>
+        <!-- end Inner Wrapper -->
+    <div id="map-canvas" class="map-canvas"></div>
+  </body>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjH2DzxSQWvsoLTmWe5Rn6s0cdjzgVNqI&libraries=places"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+  <script type="text/javascript" src="js/app.js" async defer></script>
+</html>
