@@ -301,7 +301,7 @@ ul.bullets li a:hover {
   position: relative;
 }
 .background.background-visible {
-  overflow: visible;
+  overflow: hidden;
 }
 
 .background-color-grey-light {
@@ -1498,7 +1498,7 @@ ul.bullets li a:hover {
   border: 2px solid rgba(0, 0, 0, 0.18);
 }
 .faq-single .wrapper {
-  overflow: visible;
+  overflow: hidden;
   margin-left: 60px;
 }
 .faq-single .wrapper h4 {
@@ -2483,7 +2483,7 @@ ul.bullets li a:hover {
 .mCSB_inside > .mCSB_container {
   margin-right: 0px;
   padding-right: 20px;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .mCSB_scrollTools .mCSB_draggerContainer {
@@ -3989,8 +3989,7 @@ body.map-fullscreen #map {
 }
 
 #map {
-  width: 100%;
-  height: 700px;
+  height: 100%;
 }
 
 #map-simple {
@@ -5561,7 +5560,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="date"]:focus, i
   display: table;
   padding: 10px 10px;
   padding-top: 12px;
-  overflow: visible;
+  overflow: hidden;
   width: 100%;
 }
 .header .wrapper .brand {
@@ -6639,7 +6638,7 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
 
   .map-canvas {
     height: auto;
-    overflow: visible;
+    overflow: hidden;
   }
   .map-canvas .map {
     display: block;
@@ -6669,7 +6668,7 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
     float: left;
     height: auto;
     width: 100% !important;
-    overflow: visible;
+    overflow: hidden;
   }
   .map-canvas .items-list .inner .results li .item {
     margin-bottom: 30px;
