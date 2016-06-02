@@ -26,7 +26,7 @@ function appViewModel() {
             fullscreenControl: true
 		});
 	//Google Places autocomplete on 'input-group location'
-		var input = document.getElementById('location');		console.log(input);
+		var input = document.getElementById('location');
 		var autocomplete = new google.maps.places.Autocomplete(input);
 		var place = autocomplete.getPlace();
 		self.searchLocation = place;
@@ -44,6 +44,7 @@ function appViewModel() {
 				for (var i = 0; i < 2; i++) {
 					var	brewery = data.data[i].brewery,
 						breweryId = data.data[i].breweryId,
+						breweryName = brewery.name;
 						breweryLat = data.data[i].latitude,
 						breweryLng = data.data[i].longitude,
 						breweryType = data.data[i].locationTypeDisplay,
@@ -71,6 +72,7 @@ function appViewModel() {
 					}
 
 					self.breweries.push({
+						name: breweryName,
 						id: breweryId,
 						lat: breweryLat,
 						lng: breweryLng,
@@ -91,10 +93,16 @@ function appViewModel() {
 
 	};
 	//TODO: Create map markers
-	function createMapMarkers(){
+	function createMapMarkers(array){
+		$.each(arry, function(index, value) {
+			var lat = value.lat,
+				lng = value.lng,
+				geoLoc = new google.maps.LatLng(lat, lng),
+				breweryName = value.name;
+		})
 
 	};
-	//TODO: ClearmMapMarkers
+	//Clear mapMarkers array
 	function clearMapMarkers(){
 		$.each(self.mapMarkers(), function(key, value){
 			value.marker.setMap(null);
