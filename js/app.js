@@ -2,8 +2,8 @@ function appViewModel() {
 	var self = this;
 	var map;
 	//Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
-	this.searchLat = ko.observable();
-	this.searchLng = ko.observable();
+	this.searchLat = ko.observable(42.3545948);
+	this.searchLng = ko.observable(-71.0660132);
 	this.searchLocation = ko.observable('Boston');
 	//Stores breweries returned in search results and filtered breweries as well as map markers
 	this.breweries = ko.observableArray([]);
@@ -13,6 +13,7 @@ function appViewModel() {
 	//Initialize Google Map
 	function mapInit(){
 		defaultLocation = new google.maps.LatLng(self.searchLat(), self.searchLng());
+		console.log(defaultLocation);
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: defaultLocation,
 			zoom: 13,
