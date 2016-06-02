@@ -13,7 +13,6 @@ function appViewModel() {
 	//Initialize Google Map
 	function mapInit(){
 		defaultLocation = new google.maps.LatLng(self.searchLat(), self.searchLng());
-		console.log(defaultLocation);
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: defaultLocation,
 			zoom: 13,
@@ -42,7 +41,7 @@ function appViewModel() {
 			dataType: 'json',
 			success: function(data){
 				var len = data.totalResults;
-				for (var i = 0; i < 2; i++) {
+				for (var i = 0; i < len; i++) {
 					var	brewery = data.data[i].brewery,
 						breweryId = data.data[i].breweryId,
 						breweryName = brewery.name;
@@ -85,6 +84,7 @@ function appViewModel() {
 						iconImage: breweryIconImage,
 						address: breweryStreet + "|" + breweryCity + "|" + breweryState
 					});
+				createMapMarkers(self.breweries());
 				}
 			}
 		})
@@ -95,13 +95,18 @@ function appViewModel() {
 	};
 	//TODO: Create map markers
 	function createMapMarkers(array){
-		$.each(arry, function(index, value) {
+		$.each(array, function(index, value) {
 			var lat = value.lat,
 				lng = value.lng,
 				geoLoc = new google.maps.LatLng(lat, lng),
 				breweryName = value.name;
-		})
-
+				marker = new google.maps.Marker({
+					position: geoLoc,
+					title: breweryName,
+					map: map
+				});
+			self.mapMarkers.push({marker: marker});
+		});
 	};
 	//Clear mapMarkers array
 	function clearMapMarkers(){
