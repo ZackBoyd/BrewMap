@@ -98,12 +98,14 @@ function appViewModel() {
 		$.each(array, function(index, value) {
 			var lat = value.lat,
 				lng = value.lng,
+				image = value.iconImage,
 				geoLoc = new google.maps.LatLng(lat, lng),
 				breweryName = value.name;
 				marker = new google.maps.Marker({
 					position: geoLoc,
 					title: breweryName,
-					map: map
+					map: map,
+					icon: image
 				});
 			self.mapMarkers.push({marker: marker});
 		});

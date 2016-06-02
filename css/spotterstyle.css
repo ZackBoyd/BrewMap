@@ -6637,7 +6637,7 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
   }
 
   .map-canvas {
-    height: auto;
+    height: 100%;
     overflow: hidden;
   }
   .map-canvas .map {
