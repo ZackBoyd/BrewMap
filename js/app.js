@@ -40,9 +40,46 @@ function appViewModel() {
 			url: breweryDbUrl,
 			dataType: 'json',
 			success: function(data){
-				console.log(data);
+				var len = data.totalResults;
+				for (var i = 0; i < 2; i++) {
+					var brewery = data.data[i].brewery,
+						breweryId = data.data[i].breweryId,
+						breweryLat = data.data[i].latitude,
+						breweryLng = data.data[i].longitude,
+						breweryType = data.data[i].locationTypeDisplay,
+						breweryDescription = brewery.description,
+						breweryWebsite = brewery.website,
+						breweryYearEstablished = brewery.established,
+						breweryStreet = data.data[i].streetAddress,
+						breweryCity = data.data[i].locality,
+						breweryState = data.data[i].region
+						//Some breweries don't have any images associated, which will kill this function
+						//this if statement checks for images and leaves an empty string in the images variables
+						//if there are no imaages
+					var breweryImages;
+					if (brewery.images == null ) {
+						breweryImages = '';
+					} else {
+						breweryImages = brewery.images,
+						brewerySquareMediumImage = breweryImages.squareMedium,
+						breweryIconImage = breweryImages.icon	
+					}
+
+					self.breweries.push({
+						id: breweryId,
+						lat: breweryLat,
+						lng: breweryLng,
+						type: breweryType,
+						description: breweryDescription,
+						website: breweryWebsite,
+						yearEstablished: breweryYearEstablished,
+						squareMediumImage: brewerySquareMediumImage,
+						iconImage: breweryIconImage,
+						address: breweryStreet + ", " + breweryCity + ", " + breweryState
+					});
+				}
 			}
-		});
+		})
 	};
 	//TODO: Process location search function
 	function processLocationSearch (){
@@ -50,6 +87,14 @@ function appViewModel() {
 	};
 	//TODO: Create map markers
 	function createMapMarkers(){
+
+	};
+	//TODO: ClearmMapMarkers
+	function clearMapMarkers(){
+
+	};
+	//TODO: filter breweries
+	function filterBreweries(){
 
 	};
 	mapInit();
