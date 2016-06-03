@@ -128,7 +128,7 @@ function appViewModel() {
 			});
 		});
 	};
-	//Clear mapMarkers array
+	//Clear mapMarkers array test test
 	function clearMapMarkers(){
 		$.each(self.mapMarkers(), function(key, value){
 			value.marker.setMap(null);
