@@ -1,6 +1,6 @@
 function appViewModel() {
 	var self = this;
-	var map;
+	var map, infowindow;
 	//Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
 	this.searchLat = ko.observable(42.3545948);
 	this.searchLng = ko.observable(-71.0660132);
@@ -119,6 +119,13 @@ function appViewModel() {
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 				});
 			self.mapMarkers.push({marker: marker, content: contentString});
+			//Create infowindows for all the markers
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString
+			});
+			marker.addListener('click', function(){
+				infowindow.open(map, marker);
+			});
 		});
 	};
 	//Clear mapMarkers array
