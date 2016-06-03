@@ -11,7 +11,6 @@ margin: 0;
 padding: 0;
 }
 .infowindow {
-	max-width: 300px;
 	display: inline-table;
 }
 .infowindow .header-container {

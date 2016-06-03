@@ -121,7 +121,8 @@ function appViewModel() {
 			self.mapMarkers.push({marker: marker, content: contentString});
 			//Create infowindows for all the markers
 			var infowindow = new google.maps.InfoWindow({
-				content: contentString
+				content: contentString,
+				maxWidth: 300
 			});
 			marker.addListener('click', function(){
 				infowindow.open(map, marker);
