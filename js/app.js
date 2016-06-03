@@ -23,7 +23,10 @@ function appViewModel() {
             style: google.maps.ZoomControlStyle.SMALL
             },
             streetViewControl: false,
-            fullscreenControl: true
+            fullscreenControl: true,
+            fullscreenControlOptions: {
+            	position: google.maps.ControlPosition.LEFT_CENTER
+            }
 		});
 	//Google Places autocomplete on 'input-group location'
 		var input = document.getElementById('location');
@@ -115,13 +118,15 @@ function appViewModel() {
 			var marker = new google.maps.Marker({
 					position: geoLoc,
 					title: breweryName,
+					animation: google.maps.Animation.DROP,
 					map: map,
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 				});
 			self.mapMarkers.push({marker: marker, content: contentString});
 			//Create infowindows for all the markers
 			var infowindow = new google.maps.InfoWindow({
-				content: contentString
+				content: contentString,
+				maxWidth: 300
 			});
 			marker.addListener('click', function(){
 				infowindow.open(map, marker);
