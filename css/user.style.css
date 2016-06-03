@@ -10,3 +10,14 @@ height: 100%;
 margin: 0;
 padding: 0;
 }
+.infowindow {
+	max-width: 300px;
+	display: inline-table;
+}
+.infowindow .header-container {
+	background-color: darkseagreen;
+}
+.infowindow h3 {
+	float: right;
+	margin-right: 25px;
+}
