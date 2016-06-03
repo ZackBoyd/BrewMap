@@ -100,15 +100,17 @@ function appViewModel() {
 			var lat = value.lat,
 				lng = value.lng,
 				geoLoc = new google.maps.LatLng(lat, lng),
-				breweryName = value.name,
+				breweryName = value.name;
 
 			var contentString = '<div id="infowindow" class="infowindow">'+
 			'<div class="header-container">' +
-			'<img src="' + value.iconImage '">' +
-			'<h3>' + value.name '</h2>' + '</div>' +
+			'<img src="' + value.iconImage + '">' +
+			'<h3>' + value.name + '</h3>' +
+			'</div>' +
 			'<p>' + value.address + '</p>' +
-			'<p><a href="' + value.website +'">' + value.website + '</a></p>' +
-			'<p>' + value.description + '</p></div>';
+			'<p><a href="' + value.website + '">' + value.website + '</a></p>' +
+			'<p>' + value.description + '</p>' +
+			'</div>';
 
 			var marker = new google.maps.Marker({
 					position: geoLoc,
@@ -116,7 +118,7 @@ function appViewModel() {
 					map: map,
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 				});
-			self.mapMarkers.push({marker: marker});
+			self.mapMarkers.push({marker: marker, content: contentString});
 		});
 	};
 	//Clear mapMarkers array
