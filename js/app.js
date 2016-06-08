@@ -4,7 +4,6 @@ function appViewModel() {
 	//Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
 	this.searchLat = ko.observable(42.3545948);
 	this.searchLng = ko.observable(-71.0660132);
-	this.searchLocation = ko.observable('Boston');
 	//Stores breweries returned in search results and filtered breweries as well as map markers
 	this.breweries = ko.observableArray([]);
 	this.filteredBreweries = ko.observableArray([]);
@@ -28,17 +27,18 @@ function appViewModel() {
             	position: google.maps.ControlPosition.LEFT_CENTER
             }
 		});
-	//Google Places autocomplete on 'input-group location'
+	//Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
+	//will only accept an HTML element
 		var input = document.getElementById('location');
 		var autocomplete = new google.maps.places.Autocomplete(input);
 		var place = autocomplete.getPlace();
-		self.searchLocation = place;
+		//map.setCenter(place.geometry.location);
 	//Get initial brewery results for default location
 	searchBreweries();
 	}
 
 	function searchBreweries(){
-		var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=42.3596936&lng=-71.0584037&radius=15'
+		var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15'
 		$.ajax({
 			url: breweryDbUrl,
 			dataType: 'json',
