@@ -54,7 +54,8 @@ function appViewModel() {
 						breweryType = data.data[i].locationTypeDisplay,
 						breweryDescription = brewery.description,
 						breweryWebsite = brewery.website,
-						breweryYearEstablished = brewery.established;
+						breweryYearEstablished = brewery.established,
+						breweryHours = data.data[i].hoursOfOperation;
 					//Some breweries don't have street data, this for loop avoids storing values for those breweries
 					if (data.data[i].streetAddress == null) {
 						var breweryStreet = '';
