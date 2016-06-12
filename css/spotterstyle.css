@@ -3928,7 +3928,7 @@ body.map-fullscreen #map {
 }
 .map-canvas .results.list li .item {
   display: table;
-  width: 100%;
+  width: 95%;
   overflow: hidden;
 }
 .map-canvas .results.list li .item .inner {
@@ -3937,11 +3937,9 @@ body.map-fullscreen #map {
 .map-canvas .results.list li .item > .image {
   display: table-cell;
   height: 100%;
-  width: 200px;
+  width: 20%;
 }
 .map-canvas .results.list li .item > .image > img {
-  height: 100%;
-  width: 200px;
 }
 .map-canvas .results.list li .item .wrapper {
   display: table-cell;

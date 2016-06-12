@@ -12,11 +12,18 @@ padding: 0;
 }
 .infowindow {
 	display: inline-table;
+	max-width: 400px;
+	max-height: 300px;
+	width: 95%;
+	overflow-x: scroll;
 }
 .infowindow .header-container {
-	background-color: darkseagreen;
+	padding: 5px;
 }
-.infowindow h3 {
+.infowindow h4 {
 	float: right;
-	margin-right: 25px;
+	padding: 10px;
+}
+p {
+
 }

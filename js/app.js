@@ -1516,7 +1516,7 @@ function appViewModel() {
 			var contentString = '<div id="infowindow" class="infowindow">'+
 			'<div class="header-container">' +
 			'<img src="' + value.iconImage + '">' +
-			'<h3>' + value.name + '</h3>' +
+			'<h4>' + value.name + '</h4>' +
 			'</div>' +
 			'<p>' + value.address + '</p>' +
 			'<p><a href="' + value.website + '">' + value.website + '</a></p>' +
@@ -1526,7 +1526,6 @@ function appViewModel() {
 			var marker = new google.maps.Marker({
 					position: geoLoc,
 					title: breweryName,
-					animation: google.maps.Animation.DROP,
 					map: map,
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 				});
@@ -1554,8 +1553,15 @@ function appViewModel() {
 
 	};
 	//TODO: goToMaker function to open brewery marker infoWindow and center map on marker
-	function goToMarker(){
-
+	function goToMarker(clickedBrewery){
+		var clickedBreweryName = clickedBrewery.name;
+		for (var key in self.mapMarkers()) {
+			if (clickedBreweryName === self.mapMarkers()[key].marker.title) {
+				map.panTo(self.mapMarkers()[key].marker.position);
+				infowindow.setContent(self.mapMarkers[key].marker.content);
+				infowindow.open(map, self.mapMarkers()[key].marker);
+			}
+		}
 	};
 	mapInit();
 };
