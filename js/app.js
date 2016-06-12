@@ -1475,7 +1475,8 @@ function appViewModel() {
 			//this if statement checks for images and leaves an empty string in the images variables
 			//if there are no imaages
 			var breweryImages;
-			if (brewery.images == null ) {
+			if (brewery.images === undefined ) {
+				breweryIconImage ='';
 				breweryImages = '';
 			} else {
 				breweryImages = brewery.images,
