@@ -16,7 +16,7 @@
   </head>
   <body >
         <!-- Map Canvas-->
-        <div class="map-canvas list-width-20">
+        <div class="map-canvas list-width-30">
             <!-- Map -->
             <div class="map">
                 <!--/.toggle-navigation-->
@@ -49,27 +49,25 @@
             <!-- end Map -->
             <!--Items List-->
             <div class="items-list">
-                <div class="inner">
                     <header>
                         <h3>Breweries</h3>
                     </header>
                     <ul class="results list" data-bind="foreach: filteredBreweries">
                         <li data-bind="click: $parent.goToMarker"></li>
                         <div class="item">
-                            <div class="inner">
+                            <a class="image loaded">
                                 <img data-bind="attr: { src: iconImage }">
-                            </div>
+                            </a>
                             <div class="wrapper">
-                                <h6 data-bind="text: name"></h4>
-                                <p data-bind="text: address"></p>
-                                <p data-bind="text: yearEstablished"></p>
-                                <p data-bind="text: type"></p>
-                                <p data-bind="attr: { href: website }, text: website"></p>
+                                <h4 data-bind="text: name"></h4>
+                                <figure data-bind="text: address"></figure>
+                                <figure data-bind="text: yearEstablished"></figure>
+                                <figure data-bind="text: type"></figure>
+                                <figure data-bind="attr: { href: website }, text: website"></figure>
                             </div>
                         </div>
 
                     </ul>
-                </div>
                 <!--results-->
             </div>
             <!--end Items List-->
