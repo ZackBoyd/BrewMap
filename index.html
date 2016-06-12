@@ -53,8 +53,20 @@
                     <header>
                         <h3>Breweries</h3>
                     </header>
-                    <ul class="results list" data-bind=foreach: filteredBreweries>
-                        <li data-bind="click: goToMarker"></li>
+                    <ul class="results list" data-bind="foreach: filteredBreweries">
+                        <li data-bind="click: $parent.goToMarker"></li>
+                        <div class="item">
+                            <div class="inner">
+                                <img data-bind="attr: { src: iconImage }">
+                            </div>
+                            <div class="wrapper">
+                                <h6 data-bind="text: name"></h4>
+                                <p data-bind="text: address"></p>
+                                <p data-bind="text: yearEstablished"></p>
+                                <p data-bind="text: type"></p>
+                                <p data-bind="attr: { href: website }, text: website"></p>
+                            </div>
+                        </div>
 
                     </ul>
                 </div>

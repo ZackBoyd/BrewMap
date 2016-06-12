@@ -1443,7 +1443,7 @@ function appViewModel() {
 				processBreweryResults(data);
 			},
 			error: function(){
-				console.log('HTTP request failed');
+				console.log("HTTP request failed");
 				processBreweryResults(self.defaultData);
 			}
 		})
@@ -1491,13 +1491,13 @@ function appViewModel() {
 				type: breweryType,
 				description: breweryDescription,
 				website: breweryWebsite,
-				yearEstablished: breweryYearEstablished,
+				yearEstablished: "Established" + breweryYearEstablished,
 				squareMediumImage: brewerySquareMediumImage,
 				iconImage: breweryIconImage,
 				address: breweryStreet + "|" + breweryCity + "|" + breweryState
 			});
 		self.filteredBreweries(self.breweries());
-		createMapMarkers(self.breweries());
+		createMapMarkers(self.filteredBreweries());
 		}
 	};
 	//TODO: Process location search function
