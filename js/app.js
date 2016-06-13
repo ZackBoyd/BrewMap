@@ -1536,6 +1536,7 @@ function appViewModel() {
 				maxWidth: 450
 			});
 			marker.addListener('click', function(){
+				infowindow.close(map, marker);
 				infowindow.open(map, marker);
 			});
 		});
@@ -1555,6 +1556,8 @@ function appViewModel() {
 	//TODO: goToMaker function to open brewery marker infoWindow and center map on marker
 	function goToMarker(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name;
+		console.log(clickedBrewery);
+		console.log(clickedBreweryName);
 		for (var key in self.mapMarkers()) {
 			if (clickedBreweryName === self.mapMarkers()[key].marker.title) {
 				map.panTo(self.mapMarkers()[key].marker.position);

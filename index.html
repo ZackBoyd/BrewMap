@@ -54,18 +54,17 @@
                     </header>
                     <ul class="results list" data-bind="foreach: filteredBreweries">
                         <li data-bind="click: $parent.goToMarker">
-                        <div class="item">
-                            <a class="image loaded">
-                                <img data-bind="attr: { src: iconImage }">
-                            </a>
-                            <div class="wrapper">
-                                <h4 data-bind="text: name"></h4>
-                                <figure data-bind="text: address"></figure>
-                                <figure data-bind="text: yearEstablished"></figure>
-                                <figure data-bind="text: type"></figure>
-                                <figure data-bind="attr: { href: website }, text: website"></figure>
+                            <div class="item">
+                                <a class="image loaded">
+                                    <img data-bind="attr: { src: iconImage }">
+                                </a>
+                                <div class="wrapper">
+                                    <h4 data-bind="text: name"></h4>
+                                    <figure data-bind="text: address"></figure>
+                                    <figure data-bind="text: yearEstablished"></figure>
+                                    <figure data-bind="text: type"></figure>
+                                </div>
                             </div>
-                        </div>
                         </li>
                     </ul>
                 <!--results-->
