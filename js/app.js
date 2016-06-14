@@ -1424,6 +1424,7 @@ function appViewModel() {
             	position: google.maps.ControlPosition.LEFT_CENTER
             }
 		});
+		clearTimeout(self.mapRequestTimeout);
 	//Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
 	//will only accept an HTML element
 		var input = document.getElementById('location');
@@ -1438,6 +1439,7 @@ function appViewModel() {
 		var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15'
 		$.ajax({
 			url: breweryDbUrl,
+			timeout: 3000,
 			dataType: 'json',
 			success: function(data) {
 				processBreweryResults(data);
@@ -1549,6 +1551,11 @@ function appViewModel() {
 		self.mapMarkers([]);
 
 	};
+	//Set timeout limit for google maps api call 
+	self.mapRequestTimeout = setTimeout(function(){
+		$('map-canvas list-width-30').html('Google Maps was unable to load. Please refresh your browser and try again');
+	}, 8000);
+	//set time
 	//TODO: filter breweries
 	function filterBreweries(){
 
