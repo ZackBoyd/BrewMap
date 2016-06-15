@@ -1430,7 +1430,14 @@ function appViewModel() {
 		var input = (
             document.getElementById('location'));
 		var autocomplete = new google.maps.places.Autocomplete(input);
+		//Add a listener to the input field to prevent the whole page from reloading when someone selects a place with the arrow down and hits the return key
+		google.maps.event.addDomListener(input, 'keydown', function(e){
+			if (e.keyCode == 13) {
+				e.preventDefault();
+			}
+		});
 		autocomplete.bindTo('bounds', map);
+		//Add listener to Places autocomplete box to center the map and save the LatLng when a Place is selected
 		autocomplete.addListener('place_changed', function(){
 			var place = autocomplete.getPlace();
 			map.setCenter(place.geometry.location);
@@ -1551,12 +1558,12 @@ function appViewModel() {
 				maxWidth: 450
 			});
 			marker.addListener('click', function(){
-				infowindow.close(map, marker);
 				infowindow.open(map, marker);
+				map.panTo(marker.position);
 			});
 		});
 	};
-	//Clear mapMarkers array test test
+	//Clear mapMarkers array
 	function clearMapMarkers(){
 		$.each(self.mapMarkers(), function(key, value){
 			value.marker.setMap(null);
@@ -1568,7 +1575,6 @@ function appViewModel() {
 	self.mapRequestTimeout = setTimeout(function(){
 		$('map-canvas list-width-30').html('Google Maps was unable to load. Please refresh your browser and try again');
 	}, 8000);
-	//set time
 	//TODO: filter breweries
 	function filterBreweries(){
 
