@@ -1579,7 +1579,7 @@ function appViewModel() {
 	function filterBreweries(){
 
 	};
-	//TODO: goToMaker function to open brewery marker infoWindow and center map on marker
+	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	function goToMarker(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name;
 		console.log(clickedBrewery);
