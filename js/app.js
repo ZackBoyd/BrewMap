@@ -1427,13 +1427,18 @@ function appViewModel() {
 		clearTimeout(self.mapRequestTimeout);
 	//Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
 	//will only accept an HTML element
-		var input = document.getElementById('location');
+		var input = (
+            document.getElementById('location'));
 		var autocomplete = new google.maps.places.Autocomplete(input);
-		var place = autocomplete.getPlace();
-		//map.setCenter(place.geometry.location);
+		autocomplete.bindTo('bounds', map);
+		autocomplete.addListener('place_changed', function(){
+			var place = autocomplete.getPlace();
+			console.log(place);
+			map.setCenter(place.geometry.location);
+		});
 	//Get initial brewery results for default location
 	getBreweries();
-	}
+	};
 
 	function getBreweries(){
 		var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15'
