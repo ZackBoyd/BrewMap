@@ -1433,8 +1433,11 @@ function appViewModel() {
 		autocomplete.bindTo('bounds', map);
 		autocomplete.addListener('place_changed', function(){
 			var place = autocomplete.getPlace();
-			console.log(place);
 			map.setCenter(place.geometry.location);
+			var searchLocation = place.geometry.location;
+			self.searchLat = searchLocation.lat;
+			self.searchLng = searchLocation.lng;
+			getBreweries();
 		});
 	//Get initial brewery results for default location
 	getBreweries();
@@ -1457,6 +1460,10 @@ function appViewModel() {
 	};
 	//Handle JSON response and push results to breweries list and filtered breweries list
 	function processBreweryResults (data){
+		//Clear any brewery data already in observable arrays
+		self.filteredBreweries([]);
+		self.breweries([]);
+		//Loop through data result, process and push to breweries list
 		var len = data.totalResults;
 		console.log(data);
 		for (var i = 0; i < len; i++) {
@@ -1504,6 +1511,7 @@ function appViewModel() {
 				iconImage: breweryIconImage,
 				address: breweryStreet + "|" + breweryCity + "|" + breweryState
 			});
+		//Load breweries into filtered list of breweries and call createMapMarkers to create markers for breweries
 		self.filteredBreweries(self.breweries());
 		createMapMarkers(self.filteredBreweries());
 		}
