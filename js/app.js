@@ -1523,10 +1523,6 @@ function appViewModel() {
 		createMapMarkers(self.filteredBreweries());
 		}
 	};
-	//TODO: Process location search function
-	function processLocationSearch (){
-
-	};
 	//Handles an array of breweries and creates markers with infoWindows
 	function createMapMarkers(array){
 		$.each(array, function(index, value) {
