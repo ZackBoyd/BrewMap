@@ -1553,7 +1553,7 @@ function appViewModel() {
 				});
 			self.mapMarkers.push({marker: marker, content: contentString});
 			//Create infowindows for all the markers
-			var infowindow = new google.maps.InfoWindow({
+			infowindow = new google.maps.InfoWindow({
 				content: contentString,
 				maxWidth: 450
 			});
