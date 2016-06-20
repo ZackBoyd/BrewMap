@@ -1530,6 +1530,7 @@ function appViewModel() {
 				lng = value.lng,
 				geoLoc = new google.maps.LatLng(lat, lng),
 				breweryName = value.name;
+				breweryId = value.id;
 
 			var contentString = '<div id="infowindow" class="infowindow">'+
 			'<div class="header-container">' +
@@ -1539,7 +1540,7 @@ function appViewModel() {
 			'<p>' + value.address + '</p>' +
 			'<p><a href="' + value.website + '">' + value.website + '</a></p>' +
 			'<p>' + value.description + '</p>' +
-			'<button>Show me this brewerys beers' +
+			'<button id="beerButton">Show me this brewerys beers' +
 			'<span class="glyphicon glyphicon-glass"></span>' +
 			'</button>' +
 			'</div>';
@@ -1556,10 +1557,14 @@ function appViewModel() {
 				content: contentString,
 				maxWidth: 450
 			});
+			//Add listener for a click that will open the created infoWindow and center the map on the marker
 			marker.addListener('click', function(){
 				infowindow.open(map, marker);
 				map.panTo(marker.position);
 			});
+			//Add listener for click on beerButton to trigger AJAX call for beer data
+			var beerButton = document.getElementById("beerButton");
+			google.maps.event.addDomListener(beerButton, 'click', getBeers(breweryId));
 		});
 	};
 	//Clear mapMarkers array
@@ -1579,8 +1584,8 @@ function appViewModel() {
 
 	};
 	//TODO: get beers function to return all beers from a brewery called by button in infowindows
-	function getBeers(beer){
-
+	function getBeers(breweryId){
+		console.log('Getting beers for' + breweryId + '!');
 	};
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	function goToMarker(clickedBrewery){
