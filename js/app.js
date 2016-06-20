@@ -1523,10 +1523,6 @@ function appViewModel() {
 		createMapMarkers(self.filteredBreweries());
 		}
 	};
-	//TODO: Process location search function
-	function processLocationSearch (){
-
-	};
 	//Handles an array of breweries and creates markers with infoWindows
 	function createMapMarkers(array){
 		$.each(array, function(index, value) {
@@ -1543,6 +1539,9 @@ function appViewModel() {
 			'<p>' + value.address + '</p>' +
 			'<p><a href="' + value.website + '">' + value.website + '</a></p>' +
 			'<p>' + value.description + '</p>' +
+			'<button>Show me this brewerys beers' +
+			'<span class="glyphicon glyphicon-glass"></span>' +
+			'</button>' +
 			'</div>';
 
 			var marker = new google.maps.Marker({
@@ -1577,6 +1576,10 @@ function appViewModel() {
 	}, 8000);
 	//TODO: filter breweries
 	function filterBreweries(){
+
+	};
+	//TODO: get beers function to return all beers from a brewery called by button in infowindows
+	function getBeers(beer){
 
 	};
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
