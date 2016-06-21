@@ -24,6 +24,6 @@ padding: 0;
 	float: right;
 	padding: 10px;
 }
-p {
-
+.results.list li {
+	cursor: pointer;
 }

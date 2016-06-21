@@ -1589,8 +1589,6 @@ function appViewModel() {
 				map.panTo(marker.position);
 			});
 			//Add listener for click on beerButton to trigger AJAX call for beer data
-			var beerButton = document.getElementById("beerButton");
-			//google.maps.event.addDomListener(beerButton, 'click', getBeers(breweryId));
 		});
 	};
 	//Clear mapMarkers array
