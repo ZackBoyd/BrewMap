@@ -1406,6 +1406,33 @@ function appViewModel() {
 	this.filteredBreweries = ko.observableArray([]);
 	this.mapMarkers = ko.observableArray([]);
 
+	//Get user location from google maps and then search for breweries
+	this.getUserLocation = function(){
+		var x = document.getElementById('status-bar');
+		navigator.geolocation.getCurrentPosition(function(position){
+			var coords = position.coords;
+			self.searchLat = coords.latitude;
+			self.searchLng = coords.longitude;
+			getBreweries();
+		},showErrors);
+		function showErrors(error) {
+			console.log(x);
+		    switch(error.code) {
+		        case error.PERMISSION_DENIED:
+		            x.innerHTML = "User denied the request for Geolocation."
+		            break;
+		        case error.POSITION_UNAVAILABLE:
+		            x.innerHTML = "Location information is unavailable."
+		            break;
+		        case error.TIMEOUT:
+		            x.innerHTML = "The request to get user location timed out."
+		            break;
+		        case error.UNKNOWN_ERROR:
+		            x.innerHTML = "An unknown error occurred."
+		            break;
+			}
+		}
+	};
 	//Initialize Google Map
 	function mapInit(){
 		defaultLocation = new google.maps.LatLng(self.searchLat(), self.searchLng());
@@ -1564,7 +1591,7 @@ function appViewModel() {
 			});
 			//Add listener for click on beerButton to trigger AJAX call for beer data
 			var beerButton = document.getElementById("beerButton");
-			google.maps.event.addDomListener(beerButton, 'click', getBeers(breweryId));
+			//google.maps.event.addDomListener(beerButton, 'click', getBeers(breweryId));
 		});
 	};
 	//Clear mapMarkers array
@@ -1588,7 +1615,7 @@ function appViewModel() {
 		console.log('Getting beers for' + breweryId + '!');
 	};
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
-	function goToMarker(clickedBrewery){
+	this.goToMarker = function(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name;
 		console.log(clickedBrewery);
 		console.log(clickedBreweryName);
