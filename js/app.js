@@ -1408,7 +1408,7 @@ function appViewModel() {
 
 	//Get user location from google maps and then search for breweries
 	this.getUserLocation = function(){
-		var x = document.getElementById('status-bar');
+		var x = document.getElementById('alert-bar');
 		navigator.geolocation.getCurrentPosition(function(position){
 			var coords = position.coords;
 			self.searchLat = coords.latitude;
