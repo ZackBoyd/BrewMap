@@ -1619,6 +1619,7 @@ function appViewModel() {
 		for (var key in self.mapMarkers()) {
 			if (clickedBreweryName === self.mapMarkers()[key].marker.title) {
 				map.panTo(self.mapMarkers()[key].marker.position);
+				map.panBy(0, -150);
 				infowindow.setContent(self.mapMarkers()[key].content);
 				infowindow.open(map, self.mapMarkers()[key].marker);
 			}
