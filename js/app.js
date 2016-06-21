@@ -1568,9 +1568,6 @@ function appViewModel() {
 			'<p>' + value.address + '</p>' +
 			'<p><a href="' + value.website + '">' + value.website + '</a></p>' +
 			'<p>' + value.description + '</p>' +
-			'<button id="beerButton">Show me this brewerys beers' +
-			'<span class="glyphicon glyphicon-glass"></span>' +
-			'</button>' +
 			'</div>';
 
 			var marker = new google.maps.Marker({
@@ -1588,7 +1585,6 @@ function appViewModel() {
 				infowindow.open(map, marker);
 				map.panTo(marker.position);
 			});
-			//Add listener for click on beerButton to trigger AJAX call for beer data
 		});
 	};
 	//Clear mapMarkers array
