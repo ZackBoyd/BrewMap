@@ -1416,7 +1416,6 @@ function appViewModel() {
 			getBreweries();
 		},showErrors);
 		function showErrors(error) {
-			console.log(x);
 		    switch(error.code) {
 		        case error.PERMISSION_DENIED:
 		            x.innerHTML = "User denied the request for Geolocation."
@@ -1473,6 +1472,8 @@ function appViewModel() {
 			self.searchLng = searchLocation.lng;
 			getBreweries();
 		});
+	//Create infowindow and save to global infowindow variable to temporarily store content for markers
+	infowindow = new google.maps.InfoWindow({maxWidth: 450});
 	//Get initial brewery results for default location
 	getBreweries();
 	};
@@ -1579,13 +1580,11 @@ function appViewModel() {
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 				});
 			self.mapMarkers.push({marker: marker, content: contentString});
-			//Create infowindows for all the markers
-			infowindow = new google.maps.InfoWindow({
-				content: contentString,
-				maxWidth: 450
-			});
+
 			//Add listener for a click that will open the created infoWindow and center the map on the marker
 			marker.addListener('click', function(){
+				infowindow.setContent(contentString);
+				map.setZoom(13);
 				infowindow.open(map, marker);
 				map.panTo(marker.position);
 			});
@@ -1617,12 +1616,10 @@ function appViewModel() {
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	this.goToMarker = function(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name;
-		console.log(clickedBrewery);
-		console.log(clickedBreweryName);
 		for (var key in self.mapMarkers()) {
 			if (clickedBreweryName === self.mapMarkers()[key].marker.title) {
 				map.panTo(self.mapMarkers()[key].marker.position);
-				infowindow.setContent(self.mapMarkers[key].marker.content);
+				infowindow.setContent(self.mapMarkers()[key].content);
 				infowindow.open(map, self.mapMarkers()[key].marker);
 			}
 		}
