@@ -1,4 +1,5 @@
 
+
 function appViewModel() {
 	var self = this;
 	//defaultData is set to act as dummy data for crossorigin.me failures until I get get node.js up a runnding
@@ -1405,10 +1406,13 @@ function appViewModel() {
 	this.breweries = ko.observableArray([]);
 	this.filteredBreweries = ko.observableArray([]);
 	this.mapMarkers = ko.observableArray([]);
+	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
+	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
+	this.filterType = ko.observable();
 
 	//Get user location from google maps and then search for breweries
 	this.getUserLocation = function(){
-		var x = document.getElementById('alert-bar');
+		var x = document.getElementById('status-bar');
 		navigator.geolocation.getCurrentPosition(function(position){
 			var coords = position.coords;
 			self.searchLat = coords.latitude;
