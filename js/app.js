@@ -1408,7 +1408,7 @@ function appViewModel() {
 	this.mapMarkers = ko.observableArray([]);
 	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
 	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
-	this.filterType = ko.observable();
+	this.filterType = ko.observable(" ");
 
 	//Get user location from google maps and then search for breweries
 	this.getUserLocation = function(){
@@ -1477,9 +1477,9 @@ function appViewModel() {
 			getBreweries();
 		});
 		//Add listener to select list
-		$("#filterList").change(function(){
+		document.getElementById('filterButton').addEventListener('click', function(){
 			self.filterBreweries();
-		})
+		});
 		//Create infowindow and save to global infowindow variable to temporarily store content for markers
 		infowindow = new google.maps.InfoWindow({maxWidth: 450});
 		//Get initial brewery results for default location
@@ -1609,7 +1609,22 @@ function appViewModel() {
 	}, 8000);
 	//TODO: filter breweries
 	this.filterBreweries = function(){
-		console.log('just called for some brewery filtering');
+		var array = self.breweries();
+		var filterTerm = self.filterType();
+		//Clear filtered list
+		self.filteredBreweries([]);
+		//Loop through breweries and match their type against filtered type, push matches to filtered array
+		for (var i=0; i < array.length; i++) {
+			if (array[i].type == filterTerm ) {
+				self.mapMarkers()[i].marker.setMap(map);
+				self.filteredBreweries.push(array[i]);
+			} else {
+				console.log(array[i].type);
+				self.mapMarkers()[i].marker.setMap(null);
+			}
+		}
+	console.log(self.mapMarkers().length);
+	console.log(self.filteredBreweries().length);
 	};
 	//TODO: get beers function to return all beers from a brewery called by button in infowindows
 	function getBeers(breweryId){

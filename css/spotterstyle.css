@@ -6665,7 +6665,6 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
     display: none !important;
   }
   .map-canvas .map .search-bar.horizontal {
-    background-color: #474747;
     position: top;
   }
   .map-canvas .map .search-bar.horizontal .input-row .form-group {

@@ -27,3 +27,6 @@ padding: 0;
 .results.list li {
 	cursor: pointer;
 }
+#filterButton {
+	padding-left: 10px;
+}
