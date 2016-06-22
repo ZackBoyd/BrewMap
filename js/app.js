@@ -1402,6 +1402,7 @@ function appViewModel() {
 	//Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
 	this.searchLat = ko.observable(42.3545948);
 	this.searchLng = ko.observable(-71.0660132);
+    this.status = ko.observable();
 	//Stores breweries returned in search results and filtered breweries as well as map markers
 	this.breweries = ko.observableArray([]);
 	this.filteredBreweries = ko.observableArray([]);
@@ -1422,16 +1423,16 @@ function appViewModel() {
 		function showErrors(error) {
 		    switch(error.code) {
 		        case error.PERMISSION_DENIED:
-		            x.innerHTML = "User denied the request for Geolocation."
+		            self.status("User denied the request for Geolocation.")
 		            break;
 		        case error.POSITION_UNAVAILABLE:
-		            x.innerHTML = "Location information is unavailable."
+		            self.status("Location information is unavailable.")
 		            break;
 		        case error.TIMEOUT:
-		            x.innerHTML = "The request to get user location timed out."
+		            self.status("The request to get user location timed out.")
 		            break;
 		        case error.UNKNOWN_ERROR:
-		            x.innerHTML = "An unknown error occurred."
+		            self.status("An unknown error occurred.")
 		            break;
 			}
 		}
@@ -1496,7 +1497,7 @@ function appViewModel() {
 				processBreweryResults(data);
 			},
 			error: function(){
-				console.log("HTTP request failed");
+				//console.log("HTTP request failed");
 				processBreweryResults(self.defaultData);
 			}
 		})
@@ -1508,7 +1509,7 @@ function appViewModel() {
 		self.breweries([]);
 		//Loop through data result, process and push to breweries list
 		var len = data.totalResults;
-		console.log(data);
+		//console.log(data);
 		for (var i = 0; i < len; i++) {
 			var	brewery = data.data[i].brewery,
 				breweryId = data.data[i].breweryId,
@@ -1554,14 +1555,21 @@ function appViewModel() {
 				iconImage: breweryIconImage,
 				address: breweryStreet + "|" + breweryCity + "|" + breweryState
 			});
-		//Load breweries into filtered list of breweries and call createMapMarkers to create markers for breweries
-		self.filteredBreweries(self.breweries());
-		createMapMarkers(self.filteredBreweries());
 		}
+        //Load breweries into filtered list of breweries and call createMapMarkers to create markers for breweries
+        self.filteredBreweries(self.breweries());
+        createMapMarkers(self.filteredBreweries());
+		//console.log(self.mapMarkers().length);
+		//console.log(self.filteredBreweries().length);
+		//console.log(self.breweries().length);
 	};
 	//Handles an array of breweries and creates markers with infoWindows
-	function createMapMarkers(array){
-		$.each(array, function(index, value) {
+	function createMapMarkers(breweries){
+		var count = 0;
+        console.log(breweries.length);
+		//console.log(self.mapMarkers().length + 'mapmakers');
+		$.each(breweries, function(index, value) {
+			count++;
 			var lat = value.lat,
 				lng = value.lng,
 				geoLoc = new google.maps.LatLng(lat, lng),
@@ -1583,17 +1591,19 @@ function appViewModel() {
 					title: breweryName,
 					map: map,
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
-				});
+			});
 			self.mapMarkers.push({marker: marker, content: contentString});
+			//console.log(self.mapMarkers().length);
 
 			//Add listener for a click that will open the created infoWindow and center the map on the marker
-			marker.addListener('click', function(){
+			google.maps.event.addListener(marker, 'click', function(){
 				infowindow.setContent(contentString);
 				map.setZoom(13);
 				infowindow.open(map, marker);
 				map.panTo(marker.position);
 			});
 		});
+	//console.log(count);
 	};
 	//Clear mapMarkers array
 	function clearMapMarkers(){
@@ -1619,16 +1629,17 @@ function appViewModel() {
 				self.mapMarkers()[i].marker.setMap(map);
 				self.filteredBreweries.push(array[i]);
 			} else {
-				console.log(array[i].type);
+				//console.log(array[i].type);
 				self.mapMarkers()[i].marker.setMap(null);
 			}
 		}
-	console.log(self.mapMarkers().length);
-	console.log(self.filteredBreweries().length);
+	//console.log(self.mapMarkers().length);
+	//console.log(self.filteredBreweries().length);
+
 	};
 	//TODO: get beers function to return all beers from a brewery called by button in infowindows
 	function getBeers(breweryId){
-		console.log('Getting beers for' + breweryId + '!');
+		//console.log('Getting beers for' + breweryId + '!');
 	};
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	this.goToMarker = function(clickedBrewery){

@@ -27,13 +27,13 @@
                 <div class="search-bar horizontal">
                     <form class="main-search border-less-inputs" role="form" method="post">
                         <div class="input-row">
-                            <div id="status-bar"></div>
+                            <div id="status-bar" data-bind="text: status"></div>
                             <!-- /.form-group -->
                             <div class="form-group">
                                 <div class="input-group location">
                                     <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location">
                                     <span class="input-group-addon">
-                                        <i class="fa fa-map-marker geolocation" data-bind="click: getUserLocation">
+                                        <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation">
                                         </i>
                                     </span>
                                 </div>
