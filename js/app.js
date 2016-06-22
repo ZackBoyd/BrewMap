@@ -1476,10 +1476,14 @@ function appViewModel() {
 			self.searchLng = searchLocation.lng;
 			getBreweries();
 		});
-	//Create infowindow and save to global infowindow variable to temporarily store content for markers
-	infowindow = new google.maps.InfoWindow({maxWidth: 450});
-	//Get initial brewery results for default location
-	getBreweries();
+		//Add listener to select list
+		$("#filterList").change(function(){
+			self.filterBreweries();
+		})
+		//Create infowindow and save to global infowindow variable to temporarily store content for markers
+		infowindow = new google.maps.InfoWindow({maxWidth: 450});
+		//Get initial brewery results for default location
+		getBreweries();
 	};
 
 	function getBreweries(){
@@ -1604,8 +1608,8 @@ function appViewModel() {
 		$('map-canvas list-width-30').html('Google Maps was unable to load. Please refresh your browser and try again');
 	}, 8000);
 	//TODO: filter breweries
-	function filterBreweries(){
-
+	this.filterBreweries = function(){
+		console.log('just called for some brewery filtering');
 	};
 	//TODO: get beers function to return all beers from a brewery called by button in infowindows
 	function getBeers(breweryId){
