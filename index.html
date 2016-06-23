@@ -52,6 +52,7 @@
             <div class="items-list">
                     <header>
                         <h3>Breweries</h3>
+                        <div data-bind="text: resultsNum" style="padding-left: 20px"></div>
                     </header>
                     <ul class="results list" data-bind="foreach: filteredBreweries">
                         <li data-bind="click: $parent.goToMarker">

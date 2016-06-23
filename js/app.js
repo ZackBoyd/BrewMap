@@ -1403,6 +1403,7 @@ function appViewModel() {
 	this.searchLat = ko.observable(42.3545948);
 	this.searchLng = ko.observable(-71.0660132);
     this.status = ko.observable();
+    this.resultsNum = ko.observable();
 	//Stores breweries returned in search results and filtered breweries as well as map markers
 	this.breweries = ko.observableArray([]);
 	this.filteredBreweries = ko.observableArray([]);
@@ -1494,6 +1495,7 @@ function appViewModel() {
 			timeout: 3000,
 			dataType: 'json',
 			success: function(data) {
+                self.resultsNum(data.totalResults + ' results');
 				processBreweryResults(data);
 			},
 			error: function(){
