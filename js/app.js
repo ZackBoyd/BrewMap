@@ -1511,7 +1511,6 @@ function appViewModel() {
 		self.breweries([]);
 		//Loop through data result, process and push to breweries list
 		var len = data.totalResults;
-		//console.log(data);
 		for (var i = 0; i < len; i++) {
 			var	brewery = data.data[i].brewery,
 				breweryId = data.data[i].breweryId,
@@ -1561,17 +1560,10 @@ function appViewModel() {
         //Load breweries into filtered list of breweries and call createMapMarkers to create markers for breweries
         self.filteredBreweries(self.breweries());
         createMapMarkers(self.filteredBreweries());
-		//console.log(self.mapMarkers().length);
-		//console.log(self.filteredBreweries().length);
-		//console.log(self.breweries().length);
 	};
 	//Handles an array of breweries and creates markers with infoWindows
 	function createMapMarkers(breweries){
-		var count = 0;
-        console.log(breweries.length);
-		//console.log(self.mapMarkers().length + 'mapmakers');
 		$.each(breweries, function(index, value) {
-			count++;
 			var lat = value.lat,
 				lng = value.lng,
 				geoLoc = new google.maps.LatLng(lat, lng),
@@ -1595,8 +1587,6 @@ function appViewModel() {
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 			});
 			self.mapMarkers.push({marker: marker, content: contentString});
-			//console.log(self.mapMarkers().length);
-
 			//Add listener for a click that will open the created infoWindow and center the map on the marker
 			google.maps.event.addListener(marker, 'click', function(){
 				infowindow.setContent(contentString);
@@ -1605,7 +1595,6 @@ function appViewModel() {
 				map.panTo(marker.position);
 			});
 		});
-	//console.log(count);
 	};
 	//Clear mapMarkers array
 	function clearMapMarkers(){
@@ -1631,17 +1620,9 @@ function appViewModel() {
 				self.mapMarkers()[i].marker.setMap(map);
 				self.filteredBreweries.push(array[i]);
 			} else {
-				//console.log(array[i].type);
 				self.mapMarkers()[i].marker.setMap(null);
 			}
 		}
-	//console.log(self.mapMarkers().length);
-	//console.log(self.filteredBreweries().length);
-
-	};
-	//TODO: get beers function to return all beers from a brewery called by button in infowindows
-	function getBeers(breweryId){
-		//console.log('Getting beers for' + breweryId + '!');
 	};
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	this.goToMarker = function(clickedBrewery){
