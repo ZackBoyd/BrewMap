@@ -1,5 +1,4 @@
 
-
 function appViewModel() {
 	var self = this;
 	//defaultData is set to act as dummy data for crossorigin.me failures until I get get node.js up a runnding
@@ -1519,9 +1518,19 @@ function appViewModel() {
 				breweryLng = data.data[i].longitude,
 				breweryType = data.data[i].locationTypeDisplay,
 				breweryDescription = brewery.description,
-				breweryWebsite = brewery.website,
-				breweryYearEstablished = brewery.established,
 				breweryHours = data.data[i].hoursOfOperation;
+            //Some breweries don't have a year established
+            if (brewery.established == null) {
+                var breweryYearEstablished = ' ';
+            } else {
+                breweryYearEstablished = brewery.established;
+            }
+            //Some breweries don't have a website
+            if (brewery.website == null) {
+                breweryWebsite = ' ';
+            } else {
+                breweryWebsite = brewery.website;
+            }
 			//Some breweries don't have street data, this for loop avoids storing values for those breweries
 			if (data.data[i].streetAddress == null) {
 				var breweryStreet = '';
@@ -1608,9 +1617,9 @@ function appViewModel() {
 	};
 	//Set timeout limit for google maps api call 
 	self.mapRequestTimeout = setTimeout(function(){
-		$('map-canvas list-width-30').html('Google Maps was unable to load. Please refresh your browser and try again');
+		$('.map-canvas list-width-30').html('Google Maps was unable to load. Please refresh your browser and try again');
 	}, 8000);
-	//TODO: filter breweries
+	//Filter breweries and push to filtered array
 	this.filterBreweries = function(){
 		var array = self.breweries();
 		var filterTerm = self.filterType();
