@@ -1584,11 +1584,13 @@ function appViewModel() {
 					position: geoLoc,
 					title: breweryName,
 					map: map,
+                    animation: google.maps.Animation.DROP,
 					icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
 			});
 			self.mapMarkers.push({marker: marker, content: contentString});
 			//Add listener for a click that will open the created infoWindow and center the map on the marker
 			google.maps.event.addListener(marker, 'click', function(){
+                marker.setAnimation(google.maps.Animation.BOUNCE)
 				infowindow.setContent(contentString);
 				map.setZoom(13);
 				infowindow.open(map, marker);
