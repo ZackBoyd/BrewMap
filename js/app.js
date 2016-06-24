@@ -1499,7 +1499,7 @@ function appViewModel() {
 				processBreweryResults(data);
 			},
 			error: function(){
-				//console.log("HTTP request failed");
+                self.status('Sorry, unable to load breweries for your location, please refresh your browser and try again. For now, here are some nice Boston breweries');
 				processBreweryResults(self.defaultData);
 			}
 		})
