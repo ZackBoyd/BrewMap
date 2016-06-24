@@ -1,6 +1,14 @@
 # BrewMap 
 A Udactiy Front End Nanodegree project - Leverage BreweryDB's crowd-sourced data to explore all the great breweries in your area or in an area you want to visit.
 
+# Instructions to Run App
+Hard way:
+1.) Fork this repo
+2.) Download files
+3.) Open index.html
+Easy Way: 
+Go to this link http://zackboyd.github.io/BrewMap for the GitHub Pages hosted version
+
 # Current Features
 - Autocomplete location search
 - Search returns all breweries with a location within 10 miles of the search location
