@@ -1,3 +1,13 @@
+function controller () {
+    //A function to handle a successful call to google 
+    function googleSuccess() {
+        ko.applyBindings(new appViewModel());
+    };
+    function googleError() {
+        ko.applyBindings(new appViewModel());
+        self.status('Google Maps was unable to load. Please refresh your browser and try again');
+    };
+};
 function appViewModel() {
 	var self = this;
 	var map, infowindow;
@@ -252,4 +262,3 @@ function appViewModel() {
 	mapInit();
 };
 
-ko.applyBindings(new appViewModel());

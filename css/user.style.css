@@ -4,12 +4,13 @@
   transition: 0.4s;
   height: 100%;
 }
-}
+
 html, body {
 height: 100%;
 margin: 0;
 padding: 0;
 }
+
 .infowindow {
 	display: inline-table;
 	max-width: 400px;
@@ -17,16 +18,20 @@ padding: 0;
 	width: 95%;
 	overflow-x: scroll;
 }
+
 .infowindow .header-container {
 	padding: 5px;
 }
+
 .infowindow h4 {
 	float: right;
 	padding: 10px;
 }
+
 .results.list li {
 	cursor: pointer;
 }
-#filterButton {
+
+.filter {
 	padding-left: 10px;
 }
