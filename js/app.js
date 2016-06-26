@@ -1,14 +1,23 @@
-function controller () {
+/*====MapView====*/
+//This is the ViewModel where all the map functions and rendering are handled
+var mapViewModel = function () {
     //A function to handle a successful call to google 
     function googleSuccess() {
         ko.applyBindings(new appViewModel());
+        mapInit();
     };
+    //A function to handle google errors and command the viewModel to display an error message to the user
     function googleError() {
         ko.applyBindings(new appViewModel());
-        self.status('Google Maps was unable to load. Please refresh your browser and try again');
+        //Need a function in appViewModel to display text passed to 'status'
+        appViewModel.self.status('Google Maps was unable to load. Please refresh your browser and try again');
     };
+    //Map functions here (mapInit(), createMapMarkers(), getUserLocation)
 };
-function appViewModel() {
+
+/*====AppView====*/
+//This is the ViewModel where all app-wide interactions are handled (status update, filtering, clicking results, AJAX calls to breweryDB, processing results)
+var appViewModel = function() {
 	var self = this;
 	var map, infowindow;
 	//Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
