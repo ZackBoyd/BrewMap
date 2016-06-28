@@ -17,13 +17,14 @@ Go to this link http://zackboyd.github.io/BrewMap for the GitHub Pages hosted ve
 - Mobile responsive design hides results list but retains search/filter fileds on mobile devices
 
 # Future Features
-- Get a view beers for breweries
+- Get and view beers for breweries
 - View/filter beer ratings for a brewery
 - Filter brewery/beer results by beer style
+- Better handling of long descriptions for breweries (especially on mobile)
 
 # Resources used
 - Knockout.js framework
 - BreweryDB api
-- Twitter's Bootstrap
+- Twitter's Bootstrap CSS framework
 - jQuery
 - Google Places api

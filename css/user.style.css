@@ -35,3 +35,11 @@ padding: 0;
 .filter {
 	padding-left: 10px;
 }
+
+.fa-2x {
+	padding: 5px;
+}
+
+.input-row .btn-sm {
+	margin: 15px;
+}

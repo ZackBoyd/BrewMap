@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" async></script>
 
   </head>
   <body >
@@ -39,6 +38,8 @@
                             </div>
                             <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: 'Filter breweries by type', value: filterType"></select>
                             <i class="fa fa-filter fa-2x" class="filter" id="filterButton" aria-hidden="true"></i>
+                            <!-- Mobile brewery results, only shows up @media query 767px -->
+                            <button class="btn btn-primary btn-sm" id="mobileBreweryResults">Show Results</button>
                         </div>
                         <!-- /.input-row -->
                     </form>
@@ -75,8 +76,9 @@
         <!-- end Map Canvas-->
   
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjH2DzxSQWvsoLTmWe5Rn6s0cdjzgVNqI&libraries=places" async defer onerror="googleError()"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" async></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjH2DzxSQWvsoLTmWe5Rn6s0cdjzgVNqI&libraries=places&callback=googleSuccess" async defer onerror="googleError()"></script>
   </body>
 </html>
