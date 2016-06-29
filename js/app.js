@@ -99,28 +99,33 @@ var mapController = (function (){
                 breweryName = brewery.name;
                 breweryLat = data.data[i].latitude,
                 breweryLng = data.data[i].longitude,
-                breweryType = data.data[i].locationTypeDisplay,
-                breweryHours = data.data[i].hoursOfOperation;
+                breweryType = data.data[i].locationTypeDisplay
+            //Some breweries don't have hours of operation
+            if (data.data[i].hoursOfOperation == null) {
+                var breweryHours = ' ';
+            } else {
+                breweryHours = 'Open: ' + data.data[i].hoursOfOperation;
+            }
             //Some breweries don't have a description
-            if (brewery.description === null) {
+            if (brewery.description == null) {
                 var breweryDescription = ' ';
             } else {
                 breweryDescription = brewery.description;
             }
             //Some breweries don't have a year established
-            if (brewery.established === null) {
+            if (brewery.established == null) {
                 var breweryYearEstablished = ' ';
             } else {
                 breweryYearEstablished = "Established " + brewery.established;
             }
             //Some breweries don't have a website
-            if (brewery.website === null) {
+            if (brewery.website == null) {
                 breweryWebsite = ' ';
             } else {
                 breweryWebsite = brewery.website;
             }
             //Some breweries don't have street data, this for loop avoids storing values for those breweries
-            if (data.data[i].streetAddress === null) {
+            if (data.data[i].streetAddress == null) {
                 var breweryStreet = '';
             } else {
                 breweryStreet = data.data[i].streetAddress;
@@ -131,7 +136,7 @@ var mapController = (function (){
             //this if statement checks for images and leaves an empty string in the images variables
             //if there are no imaages
             var breweryImages;
-            if (brewery.images === undefined ) {
+            if (brewery.images == undefined ) {
                 breweryIconImage ='';
                 breweryImages = '';
             } else {
@@ -146,6 +151,7 @@ var mapController = (function (){
                 lat: breweryLat,
                 lng: breweryLng,
                 type: breweryType,
+                hoursOfOperation: breweryHours,
                 description: breweryDescription,
                 website: breweryWebsite,
                 yearEstablished: breweryYearEstablished,
@@ -174,6 +180,7 @@ var mapController = (function (){
             '</div>' +
             '<p>' + value.address + '</p>' +
             '<p><a href="' + value.website + '">' + value.website + '</a></p>' +
+            '<p>' + value.hoursOfOperation + '</p>' +
             '<p>' + value.description + '</p>' +
             '</div>';
 
