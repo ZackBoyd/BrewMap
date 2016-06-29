@@ -3,10 +3,15 @@ A Udactiy Front End Nanodegree project - Leverage BreweryDB's crowd-sourced data
 
 # Instructions to Run App
 Hard way:
+
 1.) Fork this repo
+
 2.) Download files
+
 3.) Open index.html
+
 Easy Way: 
+
 Go to this link http://zackboyd.github.io/BrewMap for the GitHub Pages hosted version
 
 # Current Features
