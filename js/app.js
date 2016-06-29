@@ -1,17 +1,20 @@
 /*===Global===*/
+var vm;
 //Global function to handle successful and unsuccessful google calls
 function googleSuccess() {
     //Apply knockout bindings and load the appViewModel
-    ko.applyBindings(new appViewModel());
+    vm = new appViewModel();
+    ko.applyBindings(vm);
     //Initialize map
     mapController.mapInit();
 };
 
 //A function to handle google errors and command the viewModel to display an error message to the user
 function googleError() {
-    ko.applyBindings(new appViewModel());
+    viewModel = new appViewModel();
+    ko.applyBindings(viewModel);
     //Need a function in appViewModel to display text passed to 'status'
-    appViewModel.self.status('Google Maps was unable to load. Please refresh your browser and try again');
+    viewModel.status('Google Maps was unable to load. Please refresh your browser and try again');
 };
 
 /*===MapController===*/
@@ -82,7 +85,7 @@ var mapController = (function (){
                 processBreweryResults(data);
             },
             error: function(){
-                self.status('Sorry, unable to load breweries for your location, please refresh your browser and try again.');
+                vm.status('Sorry, unable to load breweries for your location, please refresh your browser and try again.');
             }
         });
     };
@@ -302,10 +305,6 @@ var appViewModel = function() {
 			}
 		}
 	};
-	//Set timeout limit for google maps api call 
-	self.mapRequestTimeout = setTimeout(function(){
-		$('.map-canvas list-width-30').html('Google Maps was unable to load. Please refresh your browser and try again');
-	}, 8000);
 	//Filter breweries and push to filtered array
 	this.filterBreweries = function(){
 		var filterTerm = self.filterType();
