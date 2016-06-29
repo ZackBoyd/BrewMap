@@ -232,6 +232,20 @@ var mapController = (function (){
         self.searchLat = lat;
         self.searchLng = lng;
     };
+    //Method to access map
+    var accessMap = function (){
+        var retrievedMap = map;
+        return {
+            retrievedMap
+        };
+    };
+    //Method to access infowindow
+    var accessInfowindow = function () {
+        var retrievedInfowindow = infowindow;
+        return {
+            retrievedInfowindow
+        };
+    };
     return {
         mapInit: mapInit,
         getBreweries: getBreweries,
@@ -239,7 +253,9 @@ var mapController = (function (){
         clearMapMarkers: clearMapMarkers,
         accessMapMarkers: accessMapMarkers,
         updateFilteredBreweries: updateFilteredBreweries,
-        updateSearchCoords: updateSearchCoords
+        updateSearchCoords: updateSearchCoords,
+        accessMap: accessMap,
+        accessInfowindow: accessInfowindow
     };
 })();
 
@@ -293,6 +309,8 @@ var appViewModel = function() {
 	this.goToMarker = function(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name;
         var markerArray = mapController.accessMapMarkers().retrievedMapMarkers;
+        var map = mapController.accessMap().retrievedMap;
+        var infowindow =mapController.accessInfowindow().retrievedInfowindow  
 		for (var key in markerArray) {
 			if (clickedBreweryName === markerArray[key].marker.title) {
 				map.panTo(markerArray[key].marker.position);
