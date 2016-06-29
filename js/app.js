@@ -1,15 +1,10 @@
-/*===Summary===*/
-
-
-
-
-
 /*===Global===*/
-//Global map and infowindow variables
-var map, infowindow;
-//Gloabl function to in
+//Global function to handle successful and unsuccessful google calls
 function googleSuccess() {
+    //Apply knockout bindings and load the appViewModel
     ko.applyBindings(new appViewModel());
+    //Initialize map
+    mapController.mapInit();
 };
 
 //A function to handle google errors and command the viewModel to display an error message to the user
@@ -22,6 +17,7 @@ function googleError() {
 /*===MapController===*/
 var mapController = (function (){
     self = this;
+    var map, infowindow;
     this.resultsNum = ko.observable();
     //Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
     this.searchLat = ko.observable(42.3545948);
@@ -71,12 +67,12 @@ var mapController = (function (){
             getBreweries();
         });
         //Create infowindow and save to global infowindow variable to temporarily store content for markers
-        infowindow = new google.maps.InfoWindow({maxWidth: 450});
+        infowindow = new google.maps.InfoWindow({maxWidth: 400});
         //Get initial brewery results
         getBreweries();
     };
     var getBreweries = function (){
-        var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15'
+        var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15';
         $.ajax({
             url: breweryDbUrl,
             timeout: 3000,
@@ -88,7 +84,7 @@ var mapController = (function (){
             error: function(){
                 self.status('Sorry, unable to load breweries for your location, please refresh your browser and try again.');
             }
-        })
+        });
     };
     //Handle JSON response and push results to breweries list and filtered breweries list
     var processBreweryResults = function (data){
@@ -106,28 +102,28 @@ var mapController = (function (){
                 breweryType = data.data[i].locationTypeDisplay,
                 breweryHours = data.data[i].hoursOfOperation;
             //Some breweries don't have a description
-            if (brewery.description == null) {
+            if (brewery.description === null) {
                 var breweryDescription = ' ';
             } else {
                 breweryDescription = brewery.description;
             }
             //Some breweries don't have a year established
-            if (brewery.established == null) {
+            if (brewery.established === null) {
                 var breweryYearEstablished = ' ';
             } else {
                 breweryYearEstablished = "Established " + brewery.established;
             }
             //Some breweries don't have a website
-            if (brewery.website == null) {
+            if (brewery.website === null) {
                 breweryWebsite = ' ';
             } else {
                 breweryWebsite = brewery.website;
             }
             //Some breweries don't have street data, this for loop avoids storing values for those breweries
-            if (data.data[i].streetAddress == null) {
+            if (data.data[i].streetAddress === null) {
                 var breweryStreet = '';
             } else {
-                breweryStreet = data.data[i].streetAddress
+                breweryStreet = data.data[i].streetAddress;
             }
                 breweryCity = data.data[i].locality,
                 breweryState = data.data[i].region
@@ -141,7 +137,7 @@ var mapController = (function (){
             } else {
                 breweryImages = brewery.images,
                 brewerySquareMediumImage = breweryImages.squareMedium,
-                breweryIconImage = breweryImages.icon   
+                breweryIconImage = breweryImages.icon
             }
 
             self.breweries.push({
@@ -211,20 +207,21 @@ var mapController = (function (){
         var retrievedMapMarkers = self.mapMarkers();
         return {
             retrievedMapMarkers
-        }
+        };
     };
     //Method to receive a filter term and update the filteredBreweries observable accordingly
     var updateFilteredBreweries = function (filterTerm){
         //Store filtered term passed by filterBreweries()
         var filterTerm = filterTerm;
         var array = self.filteredBreweries();
+        var tempBreweryList = [];
         //Clear filtered list
         self.filteredBreweries([]);
         //Loop through breweries and match their type against filtered type, push matches to filtered array
         for (var i=0; i < array.length; i++) {
             if (array[i].type == filterTerm ) {
                 self.mapMarkers()[i].marker.setMap(map);
-                self.filteredBreweries.push(array[i]);
+                tempBreweryList.push(array[i]);
             } else {
                 self.mapMarkers()[i].marker.setMap(null);
             }
@@ -246,8 +243,7 @@ var mapController = (function (){
     };
 })();
 
-/*====AppView====*/
-//This is the ViewModel where all app-wide interactions are handled (status update, filtering, clicking results, AJAX calls to breweryDB, processing results)
+/*====ViewModel====*/
 var appViewModel = function() {
 	var self = this;
     this.status = ko.observable();
@@ -269,16 +265,16 @@ var appViewModel = function() {
 		function showErrors(error) {
 		    switch(error.code) {
 		        case error.PERMISSION_DENIED:
-		            self.status("User denied the request for Geolocation.")
+		            self.status("User denied the request for Geolocation.");
 		            break;
 		        case error.POSITION_UNAVAILABLE:
-		            self.status("Location information is unavailable.")
+		            self.status("Location information is unavailable.");
 		            break;
 		        case error.TIMEOUT:
-		            self.status("The request to get user location timed out.")
+		            self.status("The request to get user location timed out.");
 		            break;
 		        case error.UNKNOWN_ERROR:
-		            self.status("An unknown error occurred.")
+		            self.status("An unknown error occurred.");
 		            break;
 			}
 		}
@@ -300,12 +296,10 @@ var appViewModel = function() {
 		for (var key in markerArray) {
 			if (clickedBreweryName === markerArray[key].marker.title) {
 				map.panTo(markerArray[key].marker.position);
-				map.panBy(0, -150);
+				map.panBy(0, -1000);
 				infowindow.setContent(markerArray[key].content);
 				infowindow.open(map, markerArray[key].marker);
 			}
 		}
 	};
-    //Initialize map
-	mapController.mapInit();
 };

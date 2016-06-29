@@ -6653,7 +6653,7 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
 
   .map-canvas {
     height: 100%;
-    overflow: hidden;
+    overflow: scroll;
   }
   .map-canvas .map {
     display: block;

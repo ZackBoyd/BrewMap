@@ -37,9 +37,16 @@ padding: 0;
 }
 
 .fa-2x {
-	padding: 5px;
+	padding-left: 10px;
 }
 
 .input-row .btn-sm {
 	margin: 15px;
 }
+
+@media (max-width: 767px) {
+	.infowindow {
+		max-width: 
+	}
+}
+
