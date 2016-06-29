@@ -313,8 +313,9 @@ var appViewModel = function() {
         var infowindow =mapController.accessInfowindow().retrievedInfowindow  
 		for (var key in markerArray) {
 			if (clickedBreweryName === markerArray[key].marker.title) {
+                markerArray[key].marker.setAnimation(google.maps.Animation.BOUNCE);
 				map.panTo(markerArray[key].marker.position);
-				map.panBy(0, -1000);
+				map.panBy(0, -150);
 				infowindow.setContent(markerArray[key].content);
 				infowindow.open(map, markerArray[key].marker);
 			}
