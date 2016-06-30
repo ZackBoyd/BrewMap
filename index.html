@@ -23,24 +23,23 @@
                 <div id="map" class="has-parallax"></div>
                 <!--/#map-->
                 <div class="search-bar horizontal">
-                    <form class="main-search border-less-inputs" method="post">
+                    <div class="main-search border-less-inputs" method="post">
                         <div class="input-row">
                             <div id="status-bar" data-bind="text: status"></div>
                             <!-- /.form-group -->
-                            <div class="form-group">
-                                <div class="input-group location">
-                                    <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation">
-                                        </i>
-                                    </span>
-                                </div>
-                            </div>
-                            <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: 'Filter breweries by type', value: filterType"></select>
-                            <i class="fa fa-filter fa-2x" id="filterButton" aria-hidden="true"></i>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location"></input>
+                                        <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="filterList" placeholder="Filter by type" class="form-control" data-bind="value: filterType"></input>
+                                        <i class="fa fa-filter fa-2x" id="filterButton" aria-hidden="true"></i>
+                                    </div>
+                                </form>
                         </div>
                         <!-- /.input-row -->
-                    </form>
+                    </div>
                     <!-- /.main-search -->
                 </div>
                 <!-- /.search-bar -->

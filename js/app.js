@@ -222,17 +222,19 @@ var mapController = (function (){
     //Method to receive a filter term and update the filteredBreweries observable accordingly
     var updateFilteredBreweries = function (filterTerm){
         //Store filtered term passed by filterBreweries()
-        var filterTerm = filterTerm;
-        var array = self.filteredBreweries();
-        var tempBreweryList = [];
+        var filterTerm = filterTerm.toLowerCase();
+        var array = self.breweries();
         //Clear filtered list
         self.filteredBreweries([]);
         //Loop through breweries and match their type against filtered type, push matches to filtered array
         for (var i=0; i < array.length; i++) {
-            if (array[i].type == filterTerm ) {
+            if (array[i].type.toLowerCase().indexOf(filterTerm) != -1) {
                 self.mapMarkers()[i].marker.setMap(map);
-                tempBreweryList.push(array[i]);
+                self.filteredBreweries.push(array[i]);
             } else {
+                console.log(array[i].type);
+                console.log(filterTerm);
+                console.log(array[i].type.toLowerCase().indexOf(filterTerm));
                 self.mapMarkers()[i].marker.setMap(null);
             }
         }
@@ -275,7 +277,7 @@ var appViewModel = function() {
     this.status = ko.observable();
 	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
 	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
-	this.filterType = ko.observable(" ");
+	this.filterType = ko.observable("");
     //Add listener to select list
     document.getElementById('filterButton').addEventListener('click', function(){
         self.filterBreweries();
