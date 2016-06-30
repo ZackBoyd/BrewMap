@@ -50,7 +50,35 @@ padding: 0;
 	}
 }
 
+@media (min-width: 768px) {
+	#mobileResultsButton {
+		display: none;
+	}
+}
+
 .form-control {
 	margin: 5px;
 }
 
+.mobile-items-list p, img, h6 {
+	display: inline-flex;
+}
+
+.mobile-items-list .item {
+	margin: 0px;
+}
+
+.mobile-items-list header {
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+.mobile-items-list {
+    max-height: 400px;
+    left: 10%;
+    display: block;
+    bottom: 0px;
+    position: fixed;
+    overflow: auto;
+    right: 10%;
+    background-color: rgb(250,250,250);
+}

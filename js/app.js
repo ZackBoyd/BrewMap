@@ -319,6 +319,7 @@ var appViewModel = function() {
         var markerArray = mapController.accessMapMarkers().retrievedMapMarkers;
         var map = mapController.accessMap().retrievedMap;
         var infowindow =mapController.accessInfowindow().retrievedInfowindow  
+        self.mobileShow(false);
 		for (var key in markerArray) {
 			if (clickedBreweryName === markerArray[key].marker.title) {
                 markerArray[key].marker.setAnimation(google.maps.Animation.BOUNCE);
