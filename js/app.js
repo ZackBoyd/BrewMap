@@ -329,4 +329,13 @@ var appViewModel = function() {
 			}
 		}
 	};
+    //Toggle to hide/show mobile results
+    this.mobileShow = ko.observable(false);
+    this.mobileToggle = function(){
+        if (self.mobileShow() === false) {
+            self.mobileShow(true)
+        } else {
+            self.mobileShow(false)
+        }
+    };
 };
