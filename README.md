@@ -26,6 +26,7 @@ Go to this link http://zackboyd.github.io/BrewMap for the GitHub Pages hosted ve
 - View/filter beer ratings for a brewery
 - Filter brewery/beer results by beer style
 - Better handling of long descriptions for breweries (especially on mobile)
+- Better mobile experience, specifically better infowindow styling and results viewing
 
 # Resources used
 - Knockout.js framework
