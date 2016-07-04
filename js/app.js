@@ -1,12 +1,12 @@
 /*===Global===*/
-var vm;
+var vm, map, infowindow;;
 //Global function to handle successful and unsuccessful google calls
 function googleSuccess() {
     //Apply knockout bindings and load the appViewModel
     vm = new appViewModel();
     ko.applyBindings(vm);
     //Initialize map
-    mapController.mapInit();
+    mapInit();
 };
 
 //A function to handle google errors and command the viewModel to display an error message to the user
@@ -17,10 +17,53 @@ function googleError() {
     viewModel.status('Google Maps was unable to load. Please refresh your browser and try again');
 };
 
-/*===MapController===*/
+//A function to instantiate the google map
+var mapInit = function(){
+    defaultLocation = new google.maps.LatLng(self.searchLat(), self.searchLng());
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: defaultLocation,
+        zoom: 13,
+        panControl: false,
+        mapTypeControl: false,
+        zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_CENTER,
+        style: google.maps.ZoomControlStyle.SMALL
+        },
+        streetViewControl: false,
+        fullscreenControl: true,
+        fullscreenControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+        }
+    });
+    clearTimeout(self.mapRequestTimeout);
+    //Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
+    //will only accept an HTML element
+    var input = (
+        document.getElementById('location'));
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    //Add a listener to the input field to prevent the whole page from reloading when someone selects a place with the arrow down and hits the return key
+    google.maps.event.addDomListener(input, 'keydown', function(e){
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+    autocomplete.bindTo('bounds', map);
+    //Add listener to Places autocomplete box to center the map and save the LatLng when a Place is selected
+    autocomplete.addListener('place_changed', function(){
+        var place = autocomplete.getPlace();
+        map.setCenter(place.geometry.location);
+        var searchLocation = place.geometry.location;
+        self.searchLat = searchLocation.lat;
+        self.searchLng = searchLocation.lng;
+        getBreweries();
+    });
+    //Create infowindow and save to global infowindow variable to temporarily store content for markers
+    infowindow = new google.maps.InfoWindow({maxWidth: 400});
+};
+
+/*===ViewModel===*/
 var mapController = (function (){
     self = this;
-    var map, infowindow;
     this.resultsNum = ko.observable();
     //Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
     this.searchLat = ko.observable(42.3545948);
@@ -30,50 +73,6 @@ var mapController = (function (){
     this.filteredBreweries = ko.observableArray([]);
     this.mapMarkers = ko.observableArray([]);
     //Method to initialize the initial google map
-    var mapInit = function(){
-        defaultLocation = new google.maps.LatLng(self.searchLat(), self.searchLng());
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: defaultLocation,
-            zoom: 13,
-            panControl: false,
-            mapTypeControl: false,
-            zoomControlOptions: {
-            position: google.maps.ControlPosition.LEFT_CENTER,
-            style: google.maps.ZoomControlStyle.SMALL
-            },
-            streetViewControl: false,
-            fullscreenControl: true,
-            fullscreenControlOptions: {
-                position: google.maps.ControlPosition.LEFT_CENTER
-            }
-        });
-        clearTimeout(self.mapRequestTimeout);
-        //Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
-        //will only accept an HTML element
-        var input = (
-            document.getElementById('location'));
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        //Add a listener to the input field to prevent the whole page from reloading when someone selects a place with the arrow down and hits the return key
-        google.maps.event.addDomListener(input, 'keydown', function(e){
-            if (e.keyCode == 13) {
-                e.preventDefault();
-            }
-        });
-        autocomplete.bindTo('bounds', map);
-        //Add listener to Places autocomplete box to center the map and save the LatLng when a Place is selected
-        autocomplete.addListener('place_changed', function(){
-            var place = autocomplete.getPlace();
-            map.setCenter(place.geometry.location);
-            var searchLocation = place.geometry.location;
-            self.searchLat = searchLocation.lat;
-            self.searchLng = searchLocation.lng;
-            getBreweries();
-        });
-        //Create infowindow and save to global infowindow variable to temporarily store content for markers
-        infowindow = new google.maps.InfoWindow({maxWidth: 400});
-        //Get initial brewery results
-        getBreweries();
-    };
     var getBreweries = function (){
         var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15';
         $.ajax({
@@ -259,7 +258,6 @@ var mapController = (function (){
         };
     };
     return {
-        mapInit: mapInit,
         getBreweries: getBreweries,
         processBreweryResults: processBreweryResults,
         clearMapMarkers: clearMapMarkers,
