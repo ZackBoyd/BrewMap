@@ -1,5 +1,8 @@
 /*===Global===*/
-var vm, map, infowindow;;
+var vm, map, infowindow;
+//Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
+var searchLat = ko.observable(42.3545948);
+var searchLng = ko.observable(-71.0660132);
 //Global function to handle successful and unsuccessful google calls
 function googleSuccess() {
     //Apply knockout bindings and load the appViewModel
@@ -19,7 +22,7 @@ function googleError() {
 
 //A function to instantiate the google map
 var mapInit = function(){
-    defaultLocation = new google.maps.LatLng(self.searchLat(), self.searchLng());
+    defaultLocation = new google.maps.LatLng(searchLat(), searchLng());
     map = new google.maps.Map(document.getElementById('map'), {
         center: defaultLocation,
         zoom: 13,
@@ -53,28 +56,35 @@ var mapInit = function(){
         var place = autocomplete.getPlace();
         map.setCenter(place.geometry.location);
         var searchLocation = place.geometry.location;
-        self.searchLat = searchLocation.lat;
-        self.searchLng = searchLocation.lng;
+        searchLat = searchLocation.lat;
+        searchLng = searchLocation.lng;
         getBreweries();
     });
     //Create infowindow and save to global infowindow variable to temporarily store content for markers
     infowindow = new google.maps.InfoWindow({maxWidth: 400});
 };
 
-/*===ViewModel===*/
-var mapController = (function (){
-    self = this;
+/*====ViewModel====*/
+var appViewModel = function() {
+    //
+    //
+    //Define local observables and functions
+    //
+    //
+    //
+	var self = this;
+    this.status = ko.observable();
+	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
+	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
+	this.filterType = ko.observable("");
     this.resultsNum = ko.observable();
-    //Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
-    this.searchLat = ko.observable(42.3545948);
-    this.searchLng = ko.observable(-71.0660132);
     //Stores breweries returned in search results and filtered breweries as well as map markers
     this.breweries = ko.observableArray([]);
     this.filteredBreweries = ko.observableArray([]);
     this.mapMarkers = ko.observableArray([]);
-    //Method to initialize the initial google map
+    //AJAX call to BreweryDB to get results for the given search Lat/Lng
     var getBreweries = function (){
-        var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + self.searchLat() + '&lng=' + self.searchLng() + '&radius=15';
+        var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + searchLat() + '&lng=' + searchLng() + '&radius=15';
         $.ajax({
             url: breweryDbUrl,
             timeout: 3000,
@@ -88,7 +98,11 @@ var mapController = (function (){
             }
         });
     };
-    //Handle JSON response and push results to breweries list and filtered breweries list
+    //Add listener to select list
+    document.getElementById('filterButton').addEventListener('click', function(){
+        self.filterBreweries();
+    });
+        //Handle JSON response and push results to breweries list and filtered breweries list
     var processBreweryResults = function (data){
         //Clear any brewery data already in observable arrays
         self.filteredBreweries([]);
@@ -218,75 +232,14 @@ var mapController = (function (){
             retrievedMapMarkers
         };
     };
-    //Method to receive a filter term and update the filteredBreweries observable accordingly
-    var updateFilteredBreweries = function (filterTerm){
-        //Store filtered term passed by filterBreweries()
-        var filterTerm = filterTerm.toLowerCase();
-        var array = self.breweries();
-        //Clear filtered list
-        self.filteredBreweries([]);
-        //Loop through breweries and match their type against filtered type, push matches to filtered array
-        for (var i=0; i < array.length; i++) {
-            if (array[i].type.toLowerCase().indexOf(filterTerm) != -1) {
-                self.mapMarkers()[i].marker.setMap(map);
-                self.filteredBreweries.push(array[i]);
-            } else {
-                console.log(array[i].type);
-                console.log(filterTerm);
-                console.log(array[i].type.toLowerCase().indexOf(filterTerm));
-                self.mapMarkers()[i].marker.setMap(null);
-            }
-        }
-    };
-    //Method to update search lat/lng
-    var updateSearchCoords = function (lat, lng){
-        self.searchLat = lat;
-        self.searchLng = lng;
-    };
-    //Method to access map
-    var accessMap = function (){
-        var retrievedMap = map;
-        return {
-            retrievedMap
-        };
-    };
-    //Method to access infowindow
-    var accessInfowindow = function () {
-        var retrievedInfowindow = infowindow;
-        return {
-            retrievedInfowindow
-        };
-    };
-    return {
-        getBreweries: getBreweries,
-        processBreweryResults: processBreweryResults,
-        clearMapMarkers: clearMapMarkers,
-        accessMapMarkers: accessMapMarkers,
-        updateFilteredBreweries: updateFilteredBreweries,
-        updateSearchCoords: updateSearchCoords,
-        accessMap: accessMap,
-        accessInfowindow: accessInfowindow
-    };
-})();
-
-/*====ViewModel====*/
-var appViewModel = function() {
-	var self = this;
-    this.status = ko.observable();
-	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
-	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
-	this.filterType = ko.observable("");
-    //Add listener to select list
-    document.getElementById('filterButton').addEventListener('click', function(){
-        self.filterBreweries();
-    });
 	//Get user location from google maps and then search for breweries
 	this.getUserLocation = function(){
 		var x = document.getElementById('status-bar');
 		navigator.geolocation.getCurrentPosition(function(position){
 			var coords = position.coords;
-            mapController.updateSearchCoords(coords.latitude, coords.longitude);
-			mapController.getBreweries();
+            searchLat = coords.latitude;
+            searchLng = coords.longitude;
+			getBreweries();
 		},showErrors);
 		function showErrors(error) {
 		    switch(error.code) {
@@ -307,24 +260,30 @@ var appViewModel = function() {
 	};
 	//Filter breweries and push to filtered array
 	this.filterBreweries = function(){
-		var filterTerm = self.filterType();
-        //Send filterType to mapController
-        mapController.updateFilteredBreweries(filterTerm);
-	};
+        var array = self.breweries();
+        var filterTerm = self.filterType();
+        //Clear filtered list
+        self.filteredBreweries([]);
+        //Loop through breweries and match their type against filtered type, push matches to filtered array
+        for (var i=0; i < array.length; i++) {
+            if (array[i].type == filterTerm ) {
+                self.mapMarkers()[i].marker.setMap(map);
+                self.filteredBreweries.push(array[i]);
+            } else {
+                self.mapMarkers()[i].marker.setMap(null);
+            }
+        }
+    };
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	this.goToMarker = function(clickedBrewery){
-		var clickedBreweryName = clickedBrewery.name;
-        var markerArray = mapController.accessMapMarkers().retrievedMapMarkers;
-        var map = mapController.accessMap().retrievedMap;
-        var infowindow =mapController.accessInfowindow().retrievedInfowindow  
+		var clickedBreweryName = clickedBrewery.name; 
         self.mobileShow(false);
-		for (var key in markerArray) {
-			if (clickedBreweryName === markerArray[key].marker.title) {
-                markerArray[key].marker.setAnimation(google.maps.Animation.BOUNCE);
-				map.panTo(markerArray[key].marker.position);
+		for (var key in self.mapMarkers()) {
+			if (clickedBreweryName === self.mapMarkers()[key].marker.title) {
+				map.panTo(self.mapMarkers()[key].marker.position);
 				map.panBy(0, -150);
-				infowindow.setContent(markerArray[key].content);
-				infowindow.open(map, markerArray[key].marker);
+				infowindow.setContent(self.mapMarkers()[key].content);
+				infowindow.open(map, self.mapMarkers()[key].marker);
 			}
 		}
 	};
@@ -337,4 +296,7 @@ var appViewModel = function() {
             self.mobileShow(false)
         }
     };
+    //Call getBreweries to get results
+    getBreweries();
+
 };

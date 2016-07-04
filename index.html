@@ -33,7 +33,8 @@
                                         <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" id="filterList" placeholder="Filter by type" class="form-control" data-bind="value: filterType"></input>
+                                        <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: 'Filter breweries by type', value: filterType"></select>
+
                                         <i class="fa fa-filter fa-2x" id="filterButton" aria-hidden="true"></i>
                                     </div>
                                     <button id="mobileResultsButton" class="btn btn-default btn-block" data-bind="click: mobileToggle">Results</button>
