@@ -1,4 +1,7 @@
+//-------------//
 /*===Global===*/
+//-------------//
+
 var vm, map, infowindow;
 //Set default lat/lng to downtown Boston and location to 'Boston' so we can default back to these coordinates if we can't locate the user
 var searchLat = ko.observable(42.3545948);
@@ -39,32 +42,14 @@ var mapInit = function(){
         }
     });
     clearTimeout(self.mapRequestTimeout);
-    //Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
-    //will only accept an HTML element
-    var input = (
-        document.getElementById('location'));
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    //Add a listener to the input field to prevent the whole page from reloading when someone selects a place with the arrow down and hits the return key
-    google.maps.event.addDomListener(input, 'keydown', function(e){
-        if (e.keyCode == 13) {
-            e.preventDefault();
-        }
-    });
-    autocomplete.bindTo('bounds', map);
-    //Add listener to Places autocomplete box to center the map and save the LatLng when a Place is selected
-    autocomplete.addListener('place_changed', function(){
-        var place = autocomplete.getPlace();
-        map.setCenter(place.geometry.location);
-        var searchLocation = place.geometry.location;
-        searchLat = searchLocation.lat;
-        searchLng = searchLocation.lng;
-        getBreweries();
-    });
     //Create infowindow and save to global infowindow variable to temporarily store content for markers
     infowindow = new google.maps.InfoWindow({maxWidth: 400});
 };
 
+//------------------//
 /*====ViewModel====*/
+//------------------//
+
 var appViewModel = function() {
     //
     //
@@ -82,6 +67,37 @@ var appViewModel = function() {
     this.breweries = ko.observableArray([]);
     this.filteredBreweries = ko.observableArray([]);
     this.mapMarkers = ko.observableArray([]);
+//---------//
+//LISTENERS//
+//---------//
+    //Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
+    //will only accept an HTML element
+    var input = (
+        document.getElementById('location'));
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    //Add a listener to the input field to prevent the whole page from reloading when someone selects a place with the arrow down and hits the return key
+    google.maps.event.addDomListener(input, 'keydown', function(e){
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+    //Add listener to Places autocomplete box to center the map and save the LatLng when a Place is selected
+    autocomplete.addListener('place_changed', function(){
+        var place = autocomplete.getPlace();
+        map.setCenter(place.geometry.location);
+        var searchLocation = place.geometry.location;
+        searchLat = searchLocation.lat;
+        searchLng = searchLocation.lng;
+        getBreweries();
+    });
+    //Add listener to select list
+    document.getElementById('filterButton').addEventListener('click', function(){
+        self.filterBreweries();
+    });
+//-------------------//
+//DB Search Functions//
+//-------------------//
+
     //AJAX call to BreweryDB to get results for the given search Lat/Lng
     var getBreweries = function (){
         var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + searchLat() + '&lng=' + searchLng() + '&radius=15';
@@ -98,11 +114,7 @@ var appViewModel = function() {
             }
         });
     };
-    //Add listener to select list
-    document.getElementById('filterButton').addEventListener('click', function(){
-        self.filterBreweries();
-    });
-        //Handle JSON response and push results to breweries list and filtered breweries list
+    //Handle JSON response and push results to breweries list and filtered breweries list
     var processBreweryResults = function (data){
         //Clear any brewery data already in observable arrays
         self.filteredBreweries([]);
