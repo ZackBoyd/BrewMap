@@ -51,25 +51,29 @@ var mapInit = function(){
 //------------------//
 
 var appViewModel = function() {
-    //
-    //
-    //Define local observables and functions
-    //
-    //
-    //
+
+//-------------------------------------//
+    //LOCAL VARIABLES AND OBSERVABLES
+//-------------------------------------//
+
 	var self = this;
     this.status = ko.observable();
 	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
 	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
 	this.filterType = ko.observable("");
-    this.resultsNum = ko.observable();
+    this.breweryResultsNum = ko.observable();
     //Stores breweries returned in search results and filtered breweries as well as map markers
     this.breweries = ko.observableArray([]);
     this.filteredBreweries = ko.observableArray([]);
     this.mapMarkers = ko.observableArray([]);
+    //Stores beers returned from Breweries
+    this.beers = ko.observableArray([]);
+    this.beerResultsNum = ko.observable();
+
 //---------//
 //LISTENERS//
 //---------//
+
     //Google Places autocomplete on 'input-group location' -- can't use observable here because the Places API library
     //will only accept an HTML element
     var input = (
@@ -88,25 +92,22 @@ var appViewModel = function() {
         var searchLocation = place.geometry.location;
         searchLat = searchLocation.lat;
         searchLng = searchLocation.lng;
-        getBreweries();
+        self.getBreweries();
     });
-    //Add listener to select list
-    document.getElementById('filterButton').addEventListener('click', function(){
-        self.filterBreweries();
-    });
-//-------------------//
-//DB Search Functions//
-//-------------------//
+
+//-----------------------------------//
+//BREWERY SEARCH AND FILTER FUNCTIONS//
+//-----------------------------------//
 
     //AJAX call to BreweryDB to get results for the given search Lat/Lng
-    var getBreweries = function (){
+    this.getBreweries = function (){
         var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + searchLat() + '&lng=' + searchLng() + '&radius=15';
         $.ajax({
             url: breweryDbUrl,
             timeout: 3000,
             dataType: 'json',
             success: function(data) {
-                self.resultsNum(data.totalResults + ' results returned from http://www.brewerydb.com');
+                self.breweryResultsNum(data.totalResults + ' results returned from http://www.brewerydb.com');
                 processBreweryResults(data);
             },
             error: function(){
@@ -210,6 +211,8 @@ var appViewModel = function() {
             '<p><a href="' + value.website + '">' + value.website + '</a></p>' +
             '<p>' + value.hoursOfOperation + '</p>' +
             '<p>' + value.description + '</p>' +
+            '<button data-bind="click: $parent.getBeers()">Show me this beers for this brewery ' +
+            '<i class="fa fa-beer"  class="glyphicon glyphicon-glass"></i></button>' +
             '</div>';
 
             var marker = new google.maps.Marker({
@@ -222,7 +225,6 @@ var appViewModel = function() {
             self.mapMarkers.push({marker: marker, content: contentString});
             //Add listener for a click that will open the created infoWindow and center the map on the marker
             google.maps.event.addListener(marker, 'click', function(){
-                marker.setAnimation(google.maps.Animation.BOUNCE)
                 infowindow.setContent(contentString);
                 map.setZoom(13);
                 infowindow.open(map, marker);
@@ -251,7 +253,7 @@ var appViewModel = function() {
 			var coords = position.coords;
             searchLat = coords.latitude;
             searchLng = coords.longitude;
-			getBreweries();
+			self.getBreweries();
 		},showErrors);
 		function showErrors(error) {
 		    switch(error.code) {
@@ -308,7 +310,32 @@ var appViewModel = function() {
             self.mobileShow(false)
         }
     };
+
+//------------------------------//
+//BEER SEARCH AND VIEW FUNCTIONS//
+//------------------------------//
+    //Get beers for a given brewery
+    this.getBeers = function(){
+        // var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + breweryId + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';
+        //         $.ajax({
+        //             url: breweryDbBeerUrl,
+        //             timeout: 3000,
+        //             dataType: 'json',
+        //             success: function(data) {
+        //                 self.beerResultsNum(data.totalResults + ' beers found for this brewery');
+        //                 processBeerResults(data);
+        //             },
+        //             error: function(){
+        //                 vm.status('Sorry, unable to load beers for this brewery.');
+        //             }
+        //         });
+        console.log('getBeers called');
+    };
+    //Process and save results from getBeers so the data can be displayed by the viewModel
+    this.processBeerResults = function(data){
+        console.log(data);
+    }
     //Call getBreweries to get results
-    getBreweries();
+    self.getBreweries();
 
 };

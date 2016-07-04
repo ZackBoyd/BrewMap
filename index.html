@@ -35,7 +35,7 @@
                                     <div class="form-group">
                                         <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: 'Filter breweries by type', value: filterType"></select>
 
-                                        <i class="fa fa-filter fa-2x" id="filterButton" aria-hidden="true"></i>
+                                        <i class="fa fa-filter fa-2x" id="filterButton" aria-hidden="true" data-bind="click: filterBreweries"></i>
                                     </div>
                                     <button id="mobileResultsButton" class="btn btn-default btn-block" data-bind="click: mobileToggle">Results</button>
                                 </form>
@@ -51,7 +51,7 @@
             <div class="items-list" data-bind="visible: mobileShow() === false">
                 <header>
                     <h3>Breweries</h3>
-                    <div data-bind="text: resultsNum"></div>
+                    <div data-bind="text: breweryResultsNum"></div>
                     <h8>This product uses the BreweryDB API but is not endorsed or certified by PintLabs</h8>
                 </header>
                 <ul class="results list" data-bind="foreach: filteredBreweries">
@@ -77,7 +77,7 @@
         <div class="mobile-items-list" data-bind="visible: mobileShow() === true">
             <header>
                 <h3>Breweries</h3>
-                <div data-bind="text: resultsNum"></div>
+                <div data-bind="text: breweryResultsNum"></div>
             </header>
             <ul class="results list" data-bind="foreach: filteredBreweries">
                 <li data-bind="click: $parent.goToMarker">

@@ -27,6 +27,7 @@ Go to this link http://zackboyd.github.io/BrewMap for the GitHub Pages hosted ve
 - Filter brewery/beer results by beer style
 - Better handling of long descriptions for breweries (especially on mobile)
 - Better mobile experience, specifically better infowindow styling and results viewing
+- Setup a server to handle requests to BreweryDB (doesn't support CORS and currently using crossorigin.me as a stopgap to handle CORS)
 
 # Resources used
 - Knockout.js framework
