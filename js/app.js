@@ -213,7 +213,7 @@ var appViewModel = function() {
             '<p>' + value.hoursOfOperation + '</p>' +
             '<p>' + value.description + '</p>' +
             '<p>' + 'BreweryDB Id : ' + breweryId + '</p>' +
-            '<button data-bind="click: getBeers">Show me this beers for this brewery ' +
+            '<button id="beerButton">Show me the beers for this brewery ' +
             '<i class="fa fa-beer"  class="glyphicon glyphicon-glass"></i></button>' +
             '</div>';
 
@@ -230,8 +230,12 @@ var appViewModel = function() {
                 infowindow.setContent(contentString);
                 map.setZoom(13);
                 infowindow.open(map, marker);
+                // Add click listener to beerButton within infowindow to call getBeers()
+                $('#beerButton').click(function(){
+                    self.getBeers();
+                });
                 map.panTo(marker.position);
-                ko.applyBindings(appViewModel, document.getElementById("infowindow"));
+                //Find the breweryId for the marker and set it as the selected brewery id
                 var array = self.filteredBreweries();
                 for(var i = 0; i < array.length; i++) {
                     if(array[i].name === marker.title) {
@@ -325,16 +329,14 @@ var appViewModel = function() {
 //------------------------------//
     //Get beers for a given brewery
     this.getBeers = function(){
-        console.log(self.selectedBreweryId());
         var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + self.selectedBreweryId() + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';
-        console.log(breweryDbBeerUrl);
                 $.ajax({
                     url: breweryDbBeerUrl,
                     timeout: 3000,
                     dataType: 'json',
                     success: function(data) {
                         self.beerResultsNum(data.totalResults + ' beers found for this brewery');
-                        processBeerResults(data);
+                        self.processBeerResults(data);
                     },
                     error: function(){
                         vm.status('Sorry, unable to load beers for this brewery.');
@@ -345,7 +347,11 @@ var appViewModel = function() {
     this.processBeerResults = function(data){
         console.log(data);
     }
+
+//-----------------//
+//APPVIEWMODEL INIT//
+//-----------------//
+
     //Call getBreweries to get results
     self.getBreweries();
-
 };
