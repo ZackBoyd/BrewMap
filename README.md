@@ -26,7 +26,7 @@ Go to this link http://zackboyd.github.io/BrewMap for the GitHub Pages hosted ve
 - View/filter beer ratings for a brewery
 - Filter brewery/beer results by beer style
 - Better handling of long descriptions for breweries (especially on mobile)
-- Better mobile experience, specifically better infowindow styling and results viewing
+- Better mobile experience, specifically better infowindow styling and results viewing in a more polished way and adding a hamburger icon for nav
 - Setup a server to handle requests to BreweryDB (doesn't support CORS and currently using crossorigin.me as a stopgap to handle CORS)
 
 # Resources used

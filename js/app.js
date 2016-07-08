@@ -69,6 +69,7 @@ var appViewModel = function() {
     //Stores beers returned from Breweries
     this.beers = ko.observableArray([]);
     this.beerResultsNum = ko.observable();
+    this.selectedBreweryId = ko.observable();
 
 //---------//
 //LISTENERS//
@@ -211,7 +212,8 @@ var appViewModel = function() {
             '<p><a href="' + value.website + '">' + value.website + '</a></p>' +
             '<p>' + value.hoursOfOperation + '</p>' +
             '<p>' + value.description + '</p>' +
-            '<button data-bind="click: $parent.getBeers()">Show me this beers for this brewery ' +
+            '<p>' + 'BreweryDB Id : ' + breweryId + '</p>' +
+            '<button data-bind="click: getBeers">Show me this beers for this brewery ' +
             '<i class="fa fa-beer"  class="glyphicon glyphicon-glass"></i></button>' +
             '</div>';
 
@@ -229,6 +231,13 @@ var appViewModel = function() {
                 map.setZoom(13);
                 infowindow.open(map, marker);
                 map.panTo(marker.position);
+                ko.applyBindings(appViewModel, document.getElementById("infowindow"));
+                var array = self.filteredBreweries();
+                for(var i = 0; i < array.length; i++) {
+                    if(array[i].name === marker.title) {
+                        self.selectedBreweryId(array[i].id);
+                    }
+                }
             });
         });
     };
@@ -316,20 +325,21 @@ var appViewModel = function() {
 //------------------------------//
     //Get beers for a given brewery
     this.getBeers = function(){
-        // var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + breweryId + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';
-        //         $.ajax({
-        //             url: breweryDbBeerUrl,
-        //             timeout: 3000,
-        //             dataType: 'json',
-        //             success: function(data) {
-        //                 self.beerResultsNum(data.totalResults + ' beers found for this brewery');
-        //                 processBeerResults(data);
-        //             },
-        //             error: function(){
-        //                 vm.status('Sorry, unable to load beers for this brewery.');
-        //             }
-        //         });
-        console.log('getBeers called');
+        console.log(self.selectedBreweryId());
+        var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + self.selectedBreweryId() + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';
+        console.log(breweryDbBeerUrl);
+                $.ajax({
+                    url: breweryDbBeerUrl,
+                    timeout: 3000,
+                    dataType: 'json',
+                    success: function(data) {
+                        self.beerResultsNum(data.totalResults + ' beers found for this brewery');
+                        processBeerResults(data);
+                    },
+                    error: function(){
+                        vm.status('Sorry, unable to load beers for this brewery.');
+                    }
+                });
     };
     //Process and save results from getBeers so the data can be displayed by the viewModel
     this.processBeerResults = function(data){
