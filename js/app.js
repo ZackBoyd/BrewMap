@@ -68,6 +68,7 @@ var appViewModel = function() {
     this.mapMarkers = ko.observableArray([]);
     //Stores beers returned from Breweries
     this.beers = ko.observableArray([]);
+    this.filteredBeers = ko.observableArray([]);
     this.beerResultsNum = ko.observable();
     this.selectedBreweryId = ko.observable();
 
@@ -355,8 +356,88 @@ var appViewModel = function() {
     };
     //Process and save results from getBeers so the data can be displayed by the viewModel
     this.processBeerResults = function(data){
-        console.log(data);
-    }
+        //Clear any beer data already in observable arrays
+        self.filteredBeers([]);
+        self.beers([]);
+        //Loop through data result, process and push to breweries list
+        var len = data.totalResults;
+        for (var i = 0; i < len; i++) {
+            var beerId = data[i].id,
+                beerName = data[i].name,
+                beerDescription = data[i].description,
+                beerStyle = data[i].style,
+                beerStyleName = beerStyle.name,
+                beerStyleShortName = beerStyle.shortName,
+                beerAbv = data[i].abv,
+                beerIbu = data[i].ibu,
+                beerYear = data[i].year,
+                beerAvailability = data[i].available.name,
+                beerAvailabilityDescription = data[i].available.description
+    //         //Some breweries don't have hours of operation
+    //         if (data.data[i].hoursOfOperation == null) {
+    //             var breweryHours = ' ';
+    //         } else {
+    //             breweryHours = 'Open: ' + data.data[i].hoursOfOperation;
+    //         }
+    //         //Some breweries don't have a description
+    //         if (brewery.description == null) {
+    //             var breweryDescription = ' ';
+    //         } else {
+    //             breweryDescription = brewery.description;
+    //         }
+    //         //Some breweries don't have a year established
+    //         if (brewery.established == null) {
+    //             var breweryYearEstablished = ' ';
+    //         } else {
+    //             breweryYearEstablished = "Established " + brewery.established;
+    //         }
+    //         //Some breweries don't have a website
+    //         if (brewery.website == null) {
+    //             breweryWebsite = ' ';
+    //         } else {
+    //             breweryWebsite = brewery.website;
+    //         }
+    //         //Some breweries don't have street data, this for loop avoids storing values for those breweries
+    //         if (data.data[i].streetAddress == null) {
+    //             var breweryStreet = '';
+    //         } else {
+    //             breweryStreet = data.data[i].streetAddress;
+    //         }
+    //             breweryCity = data.data[i].locality,
+    //             breweryState = data.data[i].region
+    //         //Some breweries don't have any images associated, which will kill this function
+    //         //this if statement checks for images and leaves an empty string in the images variables
+    //         //if there are no imaages
+    //         var breweryImages;
+    //         if (brewery.images == undefined ) {
+    //             breweryIconImage ='';
+    //             breweryImages = '';
+    //         } else {
+    //             breweryImages = brewery.images,
+    //             brewerySquareMediumImage = breweryImages.squareMedium,
+    //             breweryIconImage = breweryImages.icon
+    //         }
+
+    //         self.breweries.push({
+    //             name: breweryName,
+    //             id: breweryId,
+    //             lat: breweryLat,
+    //             lng: breweryLng,
+    //             type: breweryType,
+    //             hoursOfOperation: breweryHours,
+    //             description: breweryDescription,
+    //             website: breweryWebsite,
+    //             yearEstablished: breweryYearEstablished,
+    //             squareMediumImage: brewerySquareMediumImage,
+    //             iconImage: breweryIconImage,
+    //             address: breweryStreet + "|" + breweryCity + "|" + breweryState
+    //         });
+    //     }
+    //     //Load breweries into filtered list of breweries and call createMapMarkers to create markers for breweries
+    //     self.filteredBreweries(self.breweries());
+    //     createMapMarkers(self.filteredBreweries());
+    // };
+    // }
 
 //-----------------//
 //APPVIEWMODEL INIT//
