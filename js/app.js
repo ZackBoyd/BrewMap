@@ -372,7 +372,11 @@ var appViewModel = function() {
                 beerIbu = data[i].ibu,
                 beerYear = data[i].year,
                 beerAvailability = data[i].available.name,
-                beerAvailabilityDescription = data[i].available.description
+                beerAvailabilityDescription = data[i].available.description,
+                beerLabels = data[i].labels,
+                beerLabelMedium = beerLabels.medium,
+                beerLabelLarge = beerLabels.large,
+                beerLabelIcon = beerLabels.icon
     //         //Some breweries don't have hours of operation
     //         if (data.data[i].hoursOfOperation == null) {
     //             var breweryHours = ' ';
