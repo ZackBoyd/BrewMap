@@ -105,7 +105,7 @@ var appViewModel = function() {
         var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + searchLat() + '&lng=' + searchLng() + '&radius=15';
         $.ajax({
             url: breweryDbUrl,
-            timeout: 3000,
+            timeout: 6000,
             dataType: 'json',
             success: function(data) {
                 self.breweryResultsNum(data.totalResults + ' results returned from http://www.brewerydb.com');
@@ -212,7 +212,6 @@ var appViewModel = function() {
             '<p><a href="' + value.website + '">' + value.website + '</a></p>' +
             '<p>' + value.hoursOfOperation + '</p>' +
             '<p>' + value.description + '</p>' +
-            '<p>' + 'BreweryDB Id : ' + breweryId + '</p>' +
             '<button id="beerButton">Show me the beers for this brewery ' +
             '<i class="fa fa-beer"  class="glyphicon glyphicon-glass"></i></button>' +
             '</div>';
@@ -311,6 +310,17 @@ var appViewModel = function() {
 				map.panBy(0, -150);
 				infowindow.setContent(self.mapMarkers()[key].content);
 				infowindow.open(map, self.mapMarkers()[key].marker);
+                // Add click listener to beerButton within infowindow to call getBeers()
+                $('#beerButton').click(function(){
+                    self.getBeers();
+                });
+                //Find the breweryId for the marker and set it as the selected brewery id
+                var array = self.filteredBreweries();
+                for(var i = 0; i < array.length; i++) {
+                    if(array[i].name === clickedBreweryName) {
+                        self.selectedBreweryId(array[i].id);
+                    }
+                }
 			}
 		}
 	};
@@ -332,7 +342,7 @@ var appViewModel = function() {
         var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + self.selectedBreweryId() + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';
                 $.ajax({
                     url: breweryDbBeerUrl,
-                    timeout: 3000,
+                    timeout: 6000,
                     dataType: 'json',
                     success: function(data) {
                         self.beerResultsNum(data.totalResults + ' beers found for this brewery');
