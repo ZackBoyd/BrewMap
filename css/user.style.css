@@ -26,8 +26,16 @@ padding: 0;
 .infowindow h4 {
 	float: right;
 	padding: 10px;
+	display: inline-block;
 }
 
+.infowindow img {
+	display: inline-block;
+}
+
+.infowindow p {
+	margin: 0px;
+}
 .results.list li {
 	cursor: pointer;
 }
