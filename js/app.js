@@ -347,6 +347,7 @@ var appViewModel = function() {
                     dataType: 'json',
                     success: function(data) {
                         self.beerResultsNum(data.totalResults + ' beers found for this brewery');
+                        console.log(data);
                         self.processBeerResults(data);
                     },
                     error: function(){
@@ -362,86 +363,42 @@ var appViewModel = function() {
         //Loop through data result, process and push to breweries list
         var len = data.totalResults;
         for (var i = 0; i < len; i++) {
+            //Attributes I expect to always get for a beer
             var beerId = data[i].id,
                 beerName = data[i].name,
                 beerDescription = data[i].description,
-                beerStyle = data[i].style,
+                beerStyle = data[i].style
                 beerStyleName = beerStyle.name,
-                beerStyleShortName = beerStyle.shortName,
-                beerAbv = data[i].abv,
-                beerIbu = data[i].ibu,
-                beerYear = data[i].year,
-                beerAvailability = data[i].available.name,
-                beerAvailabilityDescription = data[i].available.description,
-                beerLabels = data[i].labels,
-                beerLabelMedium = beerLabels.medium,
-                beerLabelLarge = beerLabels.large,
-                beerLabelIcon = beerLabels.icon
-    //         //Some breweries don't have hours of operation
-    //         if (data.data[i].hoursOfOperation == null) {
-    //             var breweryHours = ' ';
-    //         } else {
-    //             breweryHours = 'Open: ' + data.data[i].hoursOfOperation;
-    //         }
-    //         //Some breweries don't have a description
-    //         if (brewery.description == null) {
-    //             var breweryDescription = ' ';
-    //         } else {
-    //             breweryDescription = brewery.description;
-    //         }
-    //         //Some breweries don't have a year established
-    //         if (brewery.established == null) {
-    //             var breweryYearEstablished = ' ';
-    //         } else {
-    //             breweryYearEstablished = "Established " + brewery.established;
-    //         }
-    //         //Some breweries don't have a website
-    //         if (brewery.website == null) {
-    //             breweryWebsite = ' ';
-    //         } else {
-    //             breweryWebsite = brewery.website;
-    //         }
-    //         //Some breweries don't have street data, this for loop avoids storing values for those breweries
-    //         if (data.data[i].streetAddress == null) {
-    //             var breweryStreet = '';
-    //         } else {
-    //             breweryStreet = data.data[i].streetAddress;
-    //         }
-    //             breweryCity = data.data[i].locality,
-    //             breweryState = data.data[i].region
-    //         //Some breweries don't have any images associated, which will kill this function
-    //         //this if statement checks for images and leaves an empty string in the images variables
-    //         //if there are no imaages
-    //         var breweryImages;
-    //         if (brewery.images == undefined ) {
-    //             breweryIconImage ='';
-    //             breweryImages = '';
-    //         } else {
-    //             breweryImages = brewery.images,
-    //             brewerySquareMediumImage = breweryImages.squareMedium,
-    //             breweryIconImage = breweryImages.icon
-    //         }
+                //Ternarys to check attributes I'm not sure I'll get for every beer
+                beerStyleShortName = beerStyle.shortName ? beerStyle.shortName : " ",
+                beerAbvMin = data[i].abvMin ? data[i].abvMix : "No abv provided",
+                beerAbvMax = data[i].abvMax ? data[i].abvMax : "No abv provided",
+                beerIbu = data[i].ibu ? data[i].ibu : "No ibu provided",
+                beerYear = data[i].year ? data[i].year : " ",
+                beerAvailability = data[i].available.name ? data[i].available.name : "No availability provided",
+                beerAvailabilityDescription = data[i].available.description ? data[i].available.description : "No availability description provided",
+                beerLabels = data[i].labels ? data[i].label : "No labels provided",
+                beerLabelMedium = beerLabels.medium ? beerLabels.medium : "No labels provided",
+                beerLabelLarge = beerLabels.large ? beerLabels.large : "No labels provided",
+                beerLabelIcon = beerLabels.icon ? beerLabels.icon : "No labels provided"
 
-    //         self.breweries.push({
-    //             name: breweryName,
-    //             id: breweryId,
-    //             lat: breweryLat,
-    //             lng: breweryLng,
-    //             type: breweryType,
-    //             hoursOfOperation: breweryHours,
-    //             description: breweryDescription,
-    //             website: breweryWebsite,
-    //             yearEstablished: breweryYearEstablished,
-    //             squareMediumImage: brewerySquareMediumImage,
-    //             iconImage: breweryIconImage,
-    //             address: breweryStreet + "|" + breweryCity + "|" + breweryState
-    //         });
-    //     }
-    //     //Load breweries into filtered list of breweries and call createMapMarkers to create markers for breweries
-    //     self.filteredBreweries(self.breweries());
-    //     createMapMarkers(self.filteredBreweries());
-    // };
-    // }
+            self.beers.push({
+                id: beerId,
+                name: beerName,
+                description: beerDescription,
+                styleName: beerStyleName,
+                styleShortName: beerStyleShortName,
+                minAbv: beerAbvMin,
+                maxAbv: beerAbvMax,
+                ibu: beerIbu,
+                year: beerYear,
+                availabilityShort: beerAvailability,
+                availabilityLong : beerAvailabilityDescription,
+                labelIcon: beerLabelIcon,
+                LabelMedium: beerLabelMedium
+            });
+        }
+    };
 
 //-----------------//
 //APPVIEWMODEL INIT//
