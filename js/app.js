@@ -57,20 +57,23 @@ var appViewModel = function() {
 //-------------------------------------//
 
 	var self = this;
-    this.status = ko.observable();
+    self.status = ko.observable();
+    self.beerModalVisible = ko.observable(false);
 	//Observables to hold the available values to filter a brewery by and to hold the selected brewery typ to filter by
-	this.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
-	this.filterType = ko.observable("");
-    this.breweryResultsNum = ko.observable();
+	self.breweryTypes = ko.observableArray(['Macro Brewery', 'Micro Brewery', 'Nano Brewery', 'Brewpub', 'Tasting Room', 'Restaurant/Ale House', 'Cidery', 'Meadery']);
+	self.filterType = ko.observable("");
+    self.breweryResultsNum = ko.observable();
     //Stores breweries returned in search results and filtered breweries as well as map markers
-    this.breweries = ko.observableArray([]);
-    this.filteredBreweries = ko.observableArray([]);
-    this.mapMarkers = ko.observableArray([]);
+    self.breweries = ko.observableArray([]);
+    self.filteredBreweries = ko.observableArray([]);
+    self.mapMarkers = ko.observableArray([]);
     //Stores beers returned from Breweries
-    this.beers = ko.observableArray([]);
-    this.filteredBeers = ko.observableArray([]);
-    this.beerResultsNum = ko.observable();
-    this.selectedBreweryId = ko.observable();
+    self.beers = ko.observableArray([]);
+    self.filteredBeers = ko.observableArray([]);
+    self.beerResultsNum = ko.observable();
+    //Observables for selected brewery
+    self.selectedBreweryId = ko.observable();
+    self.selectedBreweryName = ko.observable();
 
 //---------//
 //LISTENERS//
@@ -102,7 +105,7 @@ var appViewModel = function() {
 //-----------------------------------//
 
     //AJAX call to BreweryDB to get results for the given search Lat/Lng
-    this.getBreweries = function (){
+    self.getBreweries = function (){
         var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + searchLat() + '&lng=' + searchLng() + '&radius=15';
         $.ajax({
             url: breweryDbUrl,
@@ -155,7 +158,7 @@ var appViewModel = function() {
             } else {
                 breweryWebsite = brewery.website;
             }
-            //Some breweries don't have street data, this for loop avoids storing values for those breweries
+            //Some breweries don't have street data, self for loop avoids storing values for those breweries
             if (data.data[i].streetAddress == null) {
                 var breweryStreet = '';
             } else {
@@ -163,8 +166,8 @@ var appViewModel = function() {
             }
                 breweryCity = data.data[i].locality,
                 breweryState = data.data[i].region
-            //Some breweries don't have any images associated, which will kill this function
-            //this if statement checks for images and leaves an empty string in the images variables
+            //Some breweries don't have any images associated, which will kill self function
+            //self if statement checks for images and leaves an empty string in the images variables
             //if there are no imaages
             var breweryImages;
             if (brewery.images == undefined ) {
@@ -233,6 +236,7 @@ var appViewModel = function() {
                 // Add click listener to beerButton within infowindow to call getBeers()
                 $('#beerButton').click(function(){
                     self.getBeers();
+                    self.showBeerModal();
                 });
                 map.panTo(marker.position);
                 //Find the breweryId for the marker and set it as the selected brewery id
@@ -260,7 +264,7 @@ var appViewModel = function() {
         };
     };
 	//Get user location from google maps and then search for breweries
-	this.getUserLocation = function(){
+	self.getUserLocation = function(){
 		var x = document.getElementById('status-bar');
 		navigator.geolocation.getCurrentPosition(function(position){
 			var coords = position.coords;
@@ -286,7 +290,7 @@ var appViewModel = function() {
 		}
 	};
 	//Filter breweries and push to filtered array
-	this.filterBreweries = function(){
+	self.filterBreweries = function(){
         var array = self.breweries();
         var filterTerm = self.filterType();
         //Clear filtered list
@@ -302,7 +306,7 @@ var appViewModel = function() {
         }
     };
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
-	this.goToMarker = function(clickedBrewery){
+	self.goToMarker = function(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name; 
         self.mobileShow(false);
 		for (var key in self.mapMarkers()) {
@@ -326,8 +330,8 @@ var appViewModel = function() {
 		}
 	};
     //Toggle to hide/show mobile results
-    this.mobileShow = ko.observable(false);
-    this.mobileToggle = function(){
+    self.mobileShow = ko.observable(false);
+    self.mobileToggle = function(){
         if (self.mobileShow() === false) {
             self.mobileShow(true)
         } else {
@@ -338,8 +342,12 @@ var appViewModel = function() {
 //------------------------------//
 //BEER SEARCH AND VIEW FUNCTIONS//
 //------------------------------//
+    //Shwo the beer modal for the selected brewery
+    self.showBeerModal = function (){
+        self.beerModalVisible(true);
+    };
     //Get beers for a given brewery
-    this.getBeers = function(){
+    self.getBeers = function(){
         var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + self.selectedBreweryId() + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';
                 $.ajax({
                     url: breweryDbBeerUrl,
@@ -356,7 +364,7 @@ var appViewModel = function() {
                 });
     };
     //Process and save results from getBeers so the data can be displayed by the viewModel
-    this.processBeerResults = function(data){
+    self.processBeerResults = function(data){
         //Clear any beer data already in observable arrays
         self.filteredBeers([]);
         self.beers([]);
