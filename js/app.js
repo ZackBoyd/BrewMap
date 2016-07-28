@@ -244,6 +244,7 @@ var appViewModel = function() {
                 for(var i = 0; i < array.length; i++) {
                     if(array[i].name === marker.title) {
                         self.selectedBreweryId(array[i].id);
+                        self.selectedBreweryName(array[i].name);
                     }
                 }
             });
@@ -318,6 +319,7 @@ var appViewModel = function() {
                 // Add click listener to beerButton within infowindow to call getBeers()
                 $('#beerButton').click(function(){
                     self.getBeers();
+                    self.showBeerModal();
                 });
                 //Find the breweryId for the marker and set it as the selected brewery id
                 var array = self.filteredBreweries();
@@ -346,6 +348,7 @@ var appViewModel = function() {
     self.showBeerModal = function (){
         self.beerModalVisible(true);
     };
+    //Knockout template for beeer modal
     //Get beers for a given brewery
     self.getBeers = function(){
         var breweryDbBeerUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/brewery/' + self.selectedBreweryId() + '/beers?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json';

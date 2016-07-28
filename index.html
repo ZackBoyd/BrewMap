@@ -92,8 +92,11 @@
         <!-- end Map Canvas-->
         <!--Start Beer Modal-->
         <div data-bind= "modal: {
-        visible: showBeerModal
-        }" class="modal-lg">
+        dialogCss: 'modal-lg',
+        visible: beerModalVisible,
+        header: {data: { label: selectedBreweryName} },
+        body: {data: { name: selectedBreweryName, content: selectedBreweryId} }
+        }">
         </div>
   
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
