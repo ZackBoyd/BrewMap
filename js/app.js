@@ -327,6 +327,7 @@ var appViewModel = function() {
                 for(var i = 0; i < array.length; i++) {
                     if(array[i].name === clickedBreweryName) {
                         self.selectedBreweryId(array[i].id);
+                        self.selectedBreweryName(array[i].name);
                     }
                 }
 			}
@@ -380,18 +381,19 @@ var appViewModel = function() {
             //Attributes I expect to always get for a beer
             var beerId = array[i].id,
                 beerName = array[i].name
-                // beerDescription = data[i].description,
-                // beerStyle = data[i].style
-                // beerStyleName = beerStyle.name,
-                // //Ternarys to check attributes I'm not sure I'll get for every beer
-                // beerStyleShortName = beerStyle.shortName ? beerStyle.shortName : " ",
-                // beerAbvMin = data[i].abvMin ? data[i].abvMix : "No abv provided",
-                // beerAbvMax = data[i].abvMax ? data[i].abvMax : "No abv provided",
-                // beerIbu = data[i].ibu ? data[i].ibu : "No ibu provided",
-                // beerYear = data[i].year ? data[i].year : " ",
-                // beerAvailability = data[i].available.name ? data[i].available.name : "No availability provided",
-                // beerAvailabilityDescription = data[i].available.description ? data[i].available.description : "No availability description provided",
-                // beerLabels = data[i].labels ? data[i].label : "No labels provided",
+                beerDescription = array[i].description,
+                beerStyle = array[i].style,
+                beerStyleName = beerStyle.name,
+                //Ternarys to check attributes I'm not sure I'll get for every beer
+                beerStyleShortName = beerStyle.shortName ? beerStyle.shortName : " ",
+                beerAbvMin = array[i].abvMin ? array[i].abvMix : "No abv provided",
+                beerAbvMax = array[i].abvMax ? array[i].abvMax : "No abv provided",
+                beerIbu = array[i].ibu ? array[i].ibu : "No ibu provided",
+                beerYear = array[i].year ? array[i].year : " "
+                // beerAvailability = array[i].available ? array[i].available : "No available provided",
+                // beerAvailabilityName = beerAvailability.name ? beerAvailability.name : "No availability provided",
+                // beerAvailabilityDescription = beerAvailability.description ? beerAvailability.description : "No availability description provided",
+                // beerLabels = array[i].labels ? array[i].label : "No labels provided",
                 // beerLabelMedium = beerLabels.medium ? beerLabels.medium : "No labels provided",
                 // beerLabelLarge = beerLabels.large ? beerLabels.large : "No labels provided",
                 // beerLabelIcon = beerLabels.icon ? beerLabels.icon : "No labels provided"
@@ -399,14 +401,14 @@ var appViewModel = function() {
 
             self.beers.push({
                 id: beerId,
-                name: beerName
-                // description: beerDescription,
-                // styleName: beerStyleName,
-                // styleShortName: beerStyleShortName,
-                // minAbv: beerAbvMin,
-                // maxAbv: beerAbvMax,
-                // ibu: beerIbu,
-                // year: beerYear,
+                name: beerName,
+                description: beerDescription,
+                styleName: beerStyleName,
+                styleShortName: beerStyleShortName,
+                minAbv: beerAbvMin,
+                maxAbv: beerAbvMax,
+                ibu: beerIbu,
+                year: beerYear,
                 // availabilityShort: beerAvailability,
                 // availabilityLong : beerAvailabilityDescription,
                 // labelIcon: beerLabelIcon,
