@@ -237,6 +237,7 @@ var appViewModel = function() {
                 $('#beerButton').click(function(){
                     self.getBeers();
                     self.showBeerModal();
+                    console.log('beers' + self.beers());
                 });
                 map.panTo(marker.position);
                 //Find the breweryId for the marker and set it as the selected brewery id
@@ -357,7 +358,8 @@ var appViewModel = function() {
                     timeout: 6000,
                     dataType: 'json',
                     success: function(data) {
-                        self.beerResultsNum(data.totalResults + ' beers found for this brewery');
+                        self.beerResultsNum(data.data.length + ' beers found for this brewery');
+                        console.log(self.beerResultsNum());
                         console.log(data);
                         self.processBeerResults(data);
                     },
@@ -372,41 +374,43 @@ var appViewModel = function() {
         self.filteredBeers([]);
         self.beers([]);
         //Loop through data result, process and push to breweries list
-        var len = data.totalResults;
+        var array = data.data;
+        var len = array.length;
         for (var i = 0; i < len; i++) {
             //Attributes I expect to always get for a beer
-            var beerId = data[i].id,
-                beerName = data[i].name,
-                beerDescription = data[i].description,
-                beerStyle = data[i].style
-                beerStyleName = beerStyle.name,
-                //Ternarys to check attributes I'm not sure I'll get for every beer
-                beerStyleShortName = beerStyle.shortName ? beerStyle.shortName : " ",
-                beerAbvMin = data[i].abvMin ? data[i].abvMix : "No abv provided",
-                beerAbvMax = data[i].abvMax ? data[i].abvMax : "No abv provided",
-                beerIbu = data[i].ibu ? data[i].ibu : "No ibu provided",
-                beerYear = data[i].year ? data[i].year : " ",
-                beerAvailability = data[i].available.name ? data[i].available.name : "No availability provided",
-                beerAvailabilityDescription = data[i].available.description ? data[i].available.description : "No availability description provided",
-                beerLabels = data[i].labels ? data[i].label : "No labels provided",
-                beerLabelMedium = beerLabels.medium ? beerLabels.medium : "No labels provided",
-                beerLabelLarge = beerLabels.large ? beerLabels.large : "No labels provided",
-                beerLabelIcon = beerLabels.icon ? beerLabels.icon : "No labels provided"
+            var beerId = array[i].id,
+                beerName = array[i].name
+                // beerDescription = data[i].description,
+                // beerStyle = data[i].style
+                // beerStyleName = beerStyle.name,
+                // //Ternarys to check attributes I'm not sure I'll get for every beer
+                // beerStyleShortName = beerStyle.shortName ? beerStyle.shortName : " ",
+                // beerAbvMin = data[i].abvMin ? data[i].abvMix : "No abv provided",
+                // beerAbvMax = data[i].abvMax ? data[i].abvMax : "No abv provided",
+                // beerIbu = data[i].ibu ? data[i].ibu : "No ibu provided",
+                // beerYear = data[i].year ? data[i].year : " ",
+                // beerAvailability = data[i].available.name ? data[i].available.name : "No availability provided",
+                // beerAvailabilityDescription = data[i].available.description ? data[i].available.description : "No availability description provided",
+                // beerLabels = data[i].labels ? data[i].label : "No labels provided",
+                // beerLabelMedium = beerLabels.medium ? beerLabels.medium : "No labels provided",
+                // beerLabelLarge = beerLabels.large ? beerLabels.large : "No labels provided",
+                // beerLabelIcon = beerLabels.icon ? beerLabels.icon : "No labels provided"
+
 
             self.beers.push({
                 id: beerId,
-                name: beerName,
-                description: beerDescription,
-                styleName: beerStyleName,
-                styleShortName: beerStyleShortName,
-                minAbv: beerAbvMin,
-                maxAbv: beerAbvMax,
-                ibu: beerIbu,
-                year: beerYear,
-                availabilityShort: beerAvailability,
-                availabilityLong : beerAvailabilityDescription,
-                labelIcon: beerLabelIcon,
-                LabelMedium: beerLabelMedium
+                name: beerName
+                // description: beerDescription,
+                // styleName: beerStyleName,
+                // styleShortName: beerStyleShortName,
+                // minAbv: beerAbvMin,
+                // maxAbv: beerAbvMax,
+                // ibu: beerIbu,
+                // year: beerYear,
+                // availabilityShort: beerAvailability,
+                // availabilityLong : beerAvailabilityDescription,
+                // labelIcon: beerLabelIcon,
+                // LabelMedium: beerLabelMedium
             });
         }
     };

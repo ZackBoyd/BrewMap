@@ -91,13 +91,14 @@
         </div>
         <!-- end Map Canvas-->
         <!--Start Beer Modal-->
-        <div data-bind= "modal: {
-        dialogCss: 'modal-lg',
-        visible: beerModalVisible,
-        header: {data: { label: selectedBreweryName} },
-        body: {data: { name: selectedBreweryName, content: selectedBreweryId} }
-        }">
+        <div data-bind="modal: { header: { data: { label: { selectedBreweryName }} }, body: { name: 'beerModalTemplate', foreach: beers }, visible: beerModalVisible }">
         </div>
+        <!-- Beer Modale Content Template -->
+        <script type="text/html" id="beerModalTemplate">
+            <h6 data-bind="text: name"></h6>
+<!--             <p data-bind="text: styleName"></p>
+            <p data-bind="text: year"></p> -->
+        </script>
   
   <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
