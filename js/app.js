@@ -225,7 +225,7 @@ var appViewModel = function() {
                     title: breweryName,
                     map: map,
                     animation: google.maps.Animation.DROP,
-                    icon: 'http://www.travelhudsonvalley.com/wp-content/uploads/2015/07/HVT_BreweryIcon.jpg'
+                    icon: 'img/beer-icon.png'
             });
             self.mapMarkers.push({marker: marker, content: contentString});
             //Add listener for a click that will open the created infoWindow and center the map on the marker
