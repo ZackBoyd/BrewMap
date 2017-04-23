@@ -295,19 +295,31 @@ var appViewModel = function() {
 	self.filterBreweries = function(){
         var array = self.breweries();
         var filterTerm = self.filterType();
+    if (typeof(filterTerm) == 'undefined') {
+        console.log(typeof(filterTerm));
+        self.filteredBreweries(self.breweries());
+        clearMapMarkers();
+        createMapMarkers(self.filteredBreweries());
+    } else {
+        console.log(filterTerm);
         //Clear filtered list
         self.filteredBreweries([]);
-        //Loop through breweries and match their type against filtered type, push matches to filtered array
+        //Loop through breweries and match their type against filtered type, push matches to filtered array        
         for (var i=0; i < array.length; i++) {
             if (array[i].type == filterTerm ) {
-                self.mapMarkers()[i].marker.setMap(map);
                 self.filteredBreweries.push(array[i]);
             } else {
                 self.mapMarkers()[i].marker.setMap(null);
             }
         };
+        //Clear and redrew markers
+        clearMapMarkers();
+        createMapMarkers(self.filteredBreweries());
+    };
+
+
         //Update results count
-        self.breweryResultsNum(self.filteredBreweries().length + ' results returned from http://www.brewerydb.com');
+        // self.breweryResultsNum(self.filteredBreweries().length + ' results returned from http://www.brewerydb.com');
     };
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	self.goToMarker = function(clickedBrewery){
