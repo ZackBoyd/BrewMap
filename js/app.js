@@ -305,7 +305,9 @@ var appViewModel = function() {
             } else {
                 self.mapMarkers()[i].marker.setMap(null);
             }
-        }
+        };
+        //Update results count
+        self.breweryResultsNum(self.filteredBreweries().length + ' results returned from http://www.brewerydb.com');
     };
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
 	self.goToMarker = function(clickedBrewery){
