@@ -34,7 +34,7 @@
                                         <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i>
                                     </div>
                                     <div class="form-group">
-                                        <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: '--None--', value: filterType, click: filterBreweries"></select>
+                                        <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: '--None--', value: filterType, event: {change : filterBreweries}"></select>
                                     </div>
                                     <button id="mobileResultsButton" class="btn btn-default btn-block" data-bind="click: mobileToggle">Results</button>
                                 </form>
