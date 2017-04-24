@@ -319,12 +319,35 @@ var appViewModel = function() {
     };
     };
 	//Handle the clicked li element for brewery results. Pans the map to the marker and opens the infoWindow for that marker
+<<<<<<< HEAD
 	self.goToMarker = function(clickedBrewery){
 		var clickedBreweryName = clickedBrewery.name; 
         self.mobileShow(false);
 		for (var key in self.mapMarkers()) {
 			if (clickedBreweryName === self.mapMarkers()[key].marker.title) {
 				map.panTo(self.mapMarkers()[key].marker.position);
+||||||| merged common ancestors
+	this.goToMarker = function(clickedBrewery){
+		var clickedBreweryName = clickedBrewery.name;
+        var markerArray = mapController.accessMapMarkers().retrievedMapMarkers;
+        var map = mapController.accessMap().retrievedMap;
+        var infowindow =mapController.accessInfowindow().retrievedInfowindow  
+		for (var key in markerArray) {
+			if (clickedBreweryName === markerArray[key].marker.title) {
+                markerArray[key].marker.setAnimation(google.maps.Animation.BOUNCE);
+				map.panTo(markerArray[key].marker.position);
+=======
+	this.goToMarker = function(clickedBrewery){
+		var clickedBreweryName = clickedBrewery.name;
+        var markerArray = mapController.accessMapMarkers().retrievedMapMarkers;
+        var map = mapController.accessMap().retrievedMap;
+        var infowindow =mapController.accessInfowindow().retrievedInfowindow  
+        self.mobileShow(false);
+		for (var key in markerArray) {
+			if (clickedBreweryName === markerArray[key].marker.title) {
+                markerArray[key].marker.setAnimation(google.maps.Animation.BOUNCE);
+				map.panTo(markerArray[key].marker.position);
+>>>>>>> 3799016f96717f615664ffbaa2dff1241565f842
 				map.panBy(0, -150);
 				infowindow.setContent(self.mapMarkers()[key].content);
 				infowindow.open(map, self.mapMarkers()[key].marker);

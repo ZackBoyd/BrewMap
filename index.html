@@ -48,11 +48,41 @@
             <!-- end Map -->
             <!--Items List-->
             <div class="items-list" data-bind="visible: mobileShow() === false">
+<<<<<<< HEAD
                 <header>
                     <h3>Breweries</h3>
                     <div data-bind="text: breweryResultsNum"></div>
                     <h8>This product uses the BreweryDB API but is not endorsed or certified by PintLabs</h8>
                 </header>
+||||||| merged common ancestors
+                    <header>
+                        <h3>Breweries</h3>
+                        <div data-bind="text: resultsNum"></div>
+                    </header>
+                    <ul class="results list" data-bind="foreach: filteredBreweries">
+                        <li data-bind="click: $parent.goToMarker">
+                            <div class="item">
+                                <div class="wrapper">
+                                    <h4 data-bind="text: name"></h4>
+                                    <figure data-bind="text: address"></figure>
+                                    <figure data-bind="text: yearEstablished"></figure>
+                                    <figure data-bind="text: type"></figure>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                <!--results-->
+            </div>
+            <!--end Items List-->
+            <!-- mobile list results -->
+            <div class="items-list" data-bind="visible: mobileShow() === true">
+=======
+                <header>
+                    <h3>Breweries</h3>
+                    <div data-bind="text: resultsNum"></div>
+                    <h8>This product uses the BreweryDB API but is not endorsed or certified by PintLabs</h8>
+                </header>
+>>>>>>> 3799016f96717f615664ffbaa2dff1241565f842
                 <ul class="results list" data-bind="foreach: filteredBreweries">
                     <li data-bind="click: $parent.goToMarker">
                         <div class="item">
@@ -71,6 +101,7 @@
                 <!--results-->
             </div>
         </div>
+<<<<<<< HEAD
         <!--end Items List-->
         <!-- mobile list results -->
         <div class="mobile-items-list" data-bind="visible: mobileShow() === true">
@@ -88,6 +119,26 @@
                 </li>
             </ul>
         </div>
+||||||| merged common ancestors
+=======
+        <!--end Items List-->
+        <!-- mobile list results -->
+        <div class="mobile-items-list" data-bind="visible: mobileShow() === true">
+            <header>
+                <h3>Breweries</h3>
+                <div data-bind="text: resultsNum"></div>
+            </header>
+            <ul class="results list" data-bind="foreach: filteredBreweries">
+                <li data-bind="click: $parent.goToMarker">
+                        <div class="item">
+                            <h6 data-bind="text: name"></h4>
+                            <p data-bind="text: address"></p>
+                            <p data-bind="text: type"></p>
+                        </div>
+                </li>
+            </ul>
+        </div>
+>>>>>>> 3799016f96717f615664ffbaa2dff1241565f842
         <!-- end Map Canvas-->
         <!--Start Beer Modal-->
         <div data-bind="modal: { header: {data: { label: selectedBreweryName } }, body: { name: 'beerModalTemplate', foreach: beers }, visible: beerModalVisible }">
