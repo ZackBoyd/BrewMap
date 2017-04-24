@@ -107,6 +107,7 @@ var appViewModel = function() {
     //AJAX call to BreweryDB to get results for the given search Lat/Lng
     self.getBreweries = function (){
         var breweryDbUrl = 'https://crossorigin.me/https://api.brewerydb.com/v2/search/geo/point?key=3b40c3114605a1ca4a7d7bc837d615f5&format=json&lat=' + searchLat() + '&lng=' + searchLng() + '&radius=15';
+        console.log(searchLat(), searchLng());
         $.ajax({
             url: breweryDbUrl,
             timeout: 6000,
@@ -259,12 +260,12 @@ var appViewModel = function() {
         self.mapMarkers([]);
     };
     //Method to give access to mapMarkers array
-    var accessMapMarkers = function (){
-        var retrievedMapMarkers = self.mapMarkers();
-        return {
-            retrievedMapMarkers
-        };
-    };
+    // var accessMapMarkers = function (){
+    //     var retrievedMapMarkers = self.mapMarkers();
+    //     return {
+    //         retrievedMapMarkers
+    //     };
+    // };
 	//Get user location from google maps and then search for breweries
 	self.getUserLocation = function(){
 		var x = document.getElementById('status-bar');
