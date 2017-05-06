@@ -19,7 +19,7 @@ padding: 0;
 	overflow-x: scroll;
 }
 
-.infowindow .header-container {
+/*.infowindow .header-container {
 	padding: 5px;
 }
 
@@ -38,7 +38,7 @@ padding: 0;
 }
 .results.list li {
 	cursor: pointer;
-}
+}*/
 
 .filter {
 	padding-left: 10px;
