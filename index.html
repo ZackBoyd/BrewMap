@@ -17,7 +17,7 @@
   </head>
   <body >
         <!-- Map Canvas-->
-        <div class="map-canvas list-width-30">
+        <div class="map-canvas list-width-30" data-bind="visible: mobileShow() === false">
             <!-- Map -->
             <div class="map">
                 <!--/.toggle-navigation-->
@@ -31,12 +31,11 @@
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location"></input>
-                                        <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i>
+                                        <!-- <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i> -->
                                     </div>
                                     <div class="form-group">
                                         <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: '--None--', value: filterType, event: {change : filterBreweries}"></select>
                                     </div>
-                                    <button id="mobileResultsButton" class="btn btn-default btn-block" data-bind="click: mobileToggle">Results</button>
                                 </form>
                             </div>
                         <!-- /.input-row -->
@@ -45,6 +44,7 @@
                     </div>
                 <!-- /.search-bar -->
             </div>
+            <!-- Results button for mobile -->
             <!-- end Map -->
             <!--Items List-->
             <div class="items-list" data-bind="visible: mobileShow() === false">
@@ -71,13 +71,9 @@
                 <!--results-->
             </div>
         </div>
-        <!--end Items List-->
+        <!--end Items List-->     
         <!-- mobile list results -->
-        <div class="mobile-items-list" data-bind="visible: mobileShow() === true">
-            <header>
-                <h3>Breweries</h3>
-                <div data-bind="text: breweryResultsNum"></div>
-            </header>
+        <div class="mobile-results-list" data-bind="visible: mobileShow() === true">
             <ul class="results list" data-bind="foreach: filteredBreweries">
                 <li data-bind="click: $parent.goToMarker">
                         <div class="item">
@@ -88,6 +84,10 @@
                 </li>
             </ul>
         </div>
+        <!-- Mobile results block -->
+        <div class="mobile-results-row">
+            <button id="mobileResultsButton" class="btn btn-primary btn-lg btn-block" data-bind="click: mobileToggle">Results</button>
+        </div>   
         <!-- end Map Canvas-->
         <!--Start Beer Modal-->
         <div data-bind="modal: { header: {data: { label: selectedBreweryName } }, body: { name: 'beerModalTemplate', foreach: beers }, visible: beerModalVisible }">

@@ -6656,7 +6656,7 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
   }
 
   .map-canvas {
-    height: 100%;
+    height: 93%;
     overflow: scroll;
   }
   .map-canvas .map {
@@ -6682,11 +6682,11 @@ body.navigation-top-header .header .wrapper .toggle-navigation {
     display: none;
   }
   .map-canvas .items-list {
-    display: block;
-    float: left;
+    display: none;
+/*    float: left;
     height: auto;
     width: 100% !important;
-    overflow: hidden;
+    overflow: hidden;*/
   }
   .map-canvas .items-list .inner .results li .item {
     margin-bottom: 30px;

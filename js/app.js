@@ -212,13 +212,12 @@ var appViewModel = function() {
             '<div class="header-container">' +
             '<img src="' + value.iconImage + '">' +
             '<h4>' + value.name + '</h4>' +
+            '<h4>' + value.type + '</h4>' +
             '</div>' +
             '<p>' + value.address + '</p>' +
             '<p><a href="' + value.website + '">' + value.website + '</a></p>' +
-            '<p>' + value.hoursOfOperation + '</p>' +
-            '<button id="beerButton">Click to explore this brewery' + "'" + 's beer selection ' +
-            '<i class="fa fa-beer"  class="glyphicon glyphicon-glass"></i></button>' +
             '</div>';
+
 
             var marker = new google.maps.Marker({
                     position: geoLoc,
