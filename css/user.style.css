@@ -56,10 +56,20 @@ padding: 0;
 		max-width: 
 	}
 
-.mobile-results-list {
-	max-height: 93%;
-	overflow: scroll;
-}
+	.mobile-results-list {
+		max-height: 93%;
+		overflow: scroll;
+		}
+
+	.selectpicker{
+		margin-left: 5px;
+	}
+	.mobile-results-list .row {
+		padding: 10px;
+		border-bottom-color: lightgray;
+	    border-bottom-style: solid;
+	    border-bottom-width: 1px;
+	}
 }
 
 

@@ -74,12 +74,16 @@
         <!--end Items List-->     
         <!-- mobile list results -->
         <div class="mobile-results-list" data-bind="visible: mobileShow() === true">
-            <ul class="results list" data-bind="foreach: filteredBreweries">
+            <ul class="container" data-bind="foreach: filteredBreweries">
                 <li data-bind="click: $parent.goToMarker">
-                        <div class="item">
-                            <h6 data-bind="text: name"></h4>
-                            <p data-bind="text: address"></p>
-                            <p data-bind="text: type"></p>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img data-bind="attr: { src: iconImage }">
+                            </div>
+                            <div class="col-xs-9">
+                                <p data-bind="text: name"></p>
+                                <p data-bind="text: type"></p>
+                            </div>
                         </div>
                 </li>
             </ul>
