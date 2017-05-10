@@ -31,15 +31,9 @@ var mapInit = function(){
         zoom: 13,
         panControl: false,
         mapTypeControl: false,
-        zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER,
-        style: google.maps.ZoomControlStyle.SMALL
-        },
         streetViewControl: false,
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-            position: google.maps.ControlPosition.LEFT_CENTER
-        }
+        zoomControl: false,
+        fullscreenControl: false
     });
     clearTimeout(self.mapRequestTimeout);
     //Create infowindow and save to global infowindow variable to temporarily store content for markers
@@ -208,14 +202,20 @@ var appViewModel = function() {
                 breweryName = value.name;
                 breweryId = value.id;
 
-            var contentString = '<div id="infowindow" class="infowindow">'+
-            '<div class="header-container">' +
-            '<img src="' + value.iconImage + '">' +
+            var contentString = '<div id="infowindow" class="container-fluid">'+
+            '<div class="row">' +
             '<h4>' + value.name + '</h4>' +
-            '<h4>' + value.type + '</h4>' +
             '</div>' +
-            '<p>' + value.address + '</p>' +
-            '<p><a href="' + value.website + '">' + value.website + '</a></p>' +
+            '<div class="row">' +
+            '<div class="col-xs-3">' +
+            '<img class="img-responsive" src="' + value.iconImage + '">' +
+            '</div>' +
+            '<div class="col-xs-9">' +
+            '<h5>' + value.type + '</h5>' +
+            '<div>' + value.address + '</div>' +
+            '<div><a href="' + value.website + '">' + value.website + '</a></div>' +
+            '</div>' +
+            '</div>' +
             '</div>';
 
 
@@ -239,6 +239,7 @@ var appViewModel = function() {
                     console.log('beers' + self.beers());
                 });
                 map.panTo(marker.position);
+                map.panBy(0, -150);
                 //Find the breweryId for the marker and set it as the selected brewery id
                 var array = self.filteredBreweries();
                 for(var i = 0; i < array.length; i++) {
