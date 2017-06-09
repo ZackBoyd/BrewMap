@@ -166,7 +166,7 @@ var appViewModel = function() {
             //if there are no imaages
             var breweryImages;
             if (brewery.images == undefined ) {
-                breweryIconImage ='';
+                breweryIconImage ='img/default-brewery-icon.png';
                 breweryImages = '';
             } else {
                 breweryImages = brewery.images,
