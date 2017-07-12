@@ -38,6 +38,7 @@ var mapInit = function(){
     clearTimeout(self.mapRequestTimeout);
     //Create infowindow and save to global infowindow variable to temporarily store content for markers
     infowindow = new google.maps.InfoWindow({maxWidth: 400});
+    appViewModel().getUserLocation();
 };
 
 //------------------//
@@ -258,13 +259,6 @@ var appViewModel = function() {
         });
         self.mapMarkers([]);
     };
-    //Method to give access to mapMarkers array
-    // var accessMapMarkers = function (){
-    //     var retrievedMapMarkers = self.mapMarkers();
-    //     return {
-    //         retrievedMapMarkers
-    //     };
-    // };
 	//Get user location from google maps and then search for breweries
 	self.getUserLocation = function(){
 		var x = document.getElementById('status-bar');
