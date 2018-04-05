@@ -4,36 +4,30 @@
     <title>Brew Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/user.style.css">
-    <link rel="stylesheet" href="css/spotterstyle.css">
-    <link href="fonts/font-awesome.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="shortcut icon" type="image" href="img/favicon.ico">
+
 
   </head>
   <body >
         <!-- Map Canvas-->
-        <div class="map-canvas list-width-30" data-bind="visible: mobileShow() === false;">
+        <!-- <div data-bind="visible: mobileShow() === false;">
             <!-- Map -->
-            <div class="map">
+            <div>
                 <!--/.toggle-navigation-->
-                <div id="map" class="has-parallax"></div>
+                <div id="map"></div>
                 <!--/#map-->
-                <div class="search-bar horizontal">
-                    <div class="main-search border-less-inputs">
-                        <div class="input-row">
+                <div>
+                    <div>
+                        <div>
                             <div id="status-bar" data-bind="text: status"></div>
                             <!-- /.form-group -->
-                                <form class="form-inline">
-                                    <div class="form-group">
+                                <form>
+                                    <div>
                                         <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location"></input>
                                         <!-- <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i> -->
                                     </div>
-                                    <div class="form-group">
+                                    <div>
                                         <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: '--None--', value: filterType, event: {change : filterBreweries}"></select>
                                     </div>
                                 </form>
@@ -42,12 +36,12 @@
                         </div>
                     <!-- /.main-search -->
                     </div>
-                <!-- /.search-bar -->
+                /.search-bar
             </div>
             <!-- Results button for mobile -->
             <!-- end Map -->
             <!--Items List-->
-            <div class="items-list" data-bind="visible: mobileShow() === false">
+            <div data-bind="visible: mobileShow() === false">
                 <header>
                     <h3>Breweries</h3>
                     <div data-bind="text: breweryResultsNum"></div>
@@ -70,26 +64,28 @@
                 </ul>
                 <!--results-->
             </div>
-        </div>
+        </div> -->
         <!--end Items List-->     
         <!-- mobile list results -->
-        <div class="mobile-results-list" data-bind="visible: mobileShow() === true">
-            <ul class="container" data-bind="foreach: filteredBreweries">
-                <li data-bind="click: $parent.goToMarker">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <img data-bind="attr: { src: iconImage }">
+        <div class=".container-fluid">
+            <div data-bind="visible: mobileShow() === true">
+                <ul data-bind="foreach: filteredBreweries">
+                    <li data-bind="click: $parent.goToMarker">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img data-bind="attr: { src: iconImage }">
+                                </div>
+                                <div class="col-xs-9">
+                                    <p data-bind="text: name"></p>
+                                    <p data-bind="text: type"></p>
+                                </div>
                             </div>
-                            <div class="col-xs-9">
-                                <p data-bind="text: name"></p>
-                                <p data-bind="text: type"></p>
-                            </div>
-                        </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- Mobile results block -->
-        <div class="mobile-results-row">
+        <div>
             <button id="mobileResultsButton" class="btn btn-primary btn-lg btn-block" data-bind="click: mobileToggle">Results</button>
         </div>   
         <!-- end Map Canvas-->
@@ -106,11 +102,12 @@
             </ul>
         </script>
   
-  <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" async></script>
-  <script type="text/javascript" src="js/app.js"></script>
-  <script type="text/javascript" src="js/lib/knockstrap.min.js" async></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjH2DzxSQWvsoLTmWe5Rn6s0cdjzgVNqI&libraries=places&callback=googleSuccess" async defer onerror="googleError()"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/lib/knockstrap.min.js" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjH2DzxSQWvsoLTmWe5Rn6s0cdjzgVNqI&libraries=places&callback=googleSuccess" async defer onerror="googleError()"></script>
 </body>
 </html>
