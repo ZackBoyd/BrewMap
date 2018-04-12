@@ -5,102 +5,87 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image" href="img/favicon.ico">
 
 
   </head>
   <body >
-        <!-- Map Canvas-->
-        <!-- <div data-bind="visible: mobileShow() === false;">
-            <!-- Map -->
-            <div>
-                <!--/.toggle-navigation-->
-                <div id="map"></div>
-                <!--/#map-->
-                <div>
-                    <div>
-                        <div>
-                            <div id="status-bar" data-bind="text: status"></div>
-                            <!-- /.form-group -->
-                                <form>
-                                    <div>
-                                        <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location"></input>
-                                        <!-- <i class="fa fa-map-marker geolocation fa-2x" data-bind="click: getUserLocation"></i> -->
-                                    </div>
-                                    <div>
-                                        <select id="filterList" class="selectpicker" data-bind="options: breweryTypes, optionsCaption: '--None--', value: filterType, event: {change : filterBreweries}"></select>
-                                    </div>
-                                </form>
-                            </div>
-                        <!-- /.input-row -->
-                        </div>
-                    <!-- /.main-search -->
-                    </div>
-                /.search-bar
-            </div>
-            <!-- Results button for mobile -->
-            <!-- end Map -->
-            <!--Items List-->
-            <div data-bind="visible: mobileShow() === false">
-                <header>
-                    <h3>Breweries</h3>
+        <div class="container-fluid">
+            <div class="row" id="status-bar" data-bind="text: status"></div>
+            <div class="row">
+                <div class="col">
+                    <h3>Breweries</h3>                    
+                </div>
+                <div class="col">
                     <div data-bind="text: breweryResultsNum"></div>
-                    <h8>This product uses the BreweryDB API but is not endorsed or certified by PintLabs</h8>
-                </header>
-                <ul class="results list" data-bind="foreach: filteredBreweries">
-                    <li data-bind="click: $parent.goToMarker">
-                        <div class="item">
-                            <a class="image loaded">
-                                <img data-bind="attr: { src: iconImage }, attr: { alt: name+ ' icon' ">
-                            </a>
-                            <div class="wrapper">
-                                <h4 data-bind="text: name"></h4>
-                                <figure data-bind="text: address"></figure>
-                                <figure data-bind="text: yearEstablished"></figure>
-                                <figure data-bind="text: type"></figure>
+    <!--                 <h8>This product uses the BreweryDB API but is not endorsed or certified by PintLabs</h8> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <i class="fas fa-map-marker-alt" data-bind="click: getUserLocation"></i>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" data-bind="textInput: searchLocation" id="location" placeholder="Search by location"></input>
+                </div>
+            </div>  
+            <div class="row">
+                <div class="col">
+                    <select id="filterList" class="btn btn-secondary dropdown-toggle" data-bind="options: breweryTypes, optionsCaption: '--None--', value: filterType, event: {change : filterBreweries}"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div id="map"></div>
+            </div>       
+        </div>
+<!--         </div>
+            <ul class="results list" data-bind="foreach: filteredBreweries">
+                <li data-bind="click: $parent.goToMarker">
+                    <div class="item">
+                        <a class="image loaded">
+                            <img data-bind="attr: { src: iconImage }, attr: { alt: name+ ' icon' ">
+                        </a>
+                        <div class="wrapper">
+                            <h4 data-bind="text: name"></h4>
+                            <figure data-bind="text: address"></figure>
+                            <figure data-bind="text: yearEstablished"></figure>
+                            <figure data-bind="text: type"></figure>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+<!--     </div>   
+        <div data-bind="visible: mobileShow() === true">
+            <ul data-bind="foreach: filteredBreweries">
+                <li data-bind="click: $parent.goToMarker">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img data-bind="attr: { src: iconImage }">
+                            </div>
+                            <div class="col-xs-9">
+                                <p data-bind="text: name"></p>
+                                <p data-bind="text: type"></p>
                             </div>
                         </div>
-                    </li>
-                </ul>
-                <!--results-->
-            </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button id="mobileResultsButton" class="btn btn-primary btn-lg btn-block" data-bind="click: mobileToggle">Results</button> -->
+          
+<!--         <<div data-bind="modal: { header: {data: { label: selectedBreweryName } }, body: { name: 'beerModalTemplate', foreach: beers }, visible: beerModalVisible }">
         </div> -->
-        <!--end Items List-->     
-        <!-- mobile list results -->
-        <div class=".container-fluid">
-            <div data-bind="visible: mobileShow() === true">
-                <ul data-bind="foreach: filteredBreweries">
-                    <li data-bind="click: $parent.goToMarker">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <img data-bind="attr: { src: iconImage }">
-                                </div>
-                                <div class="col-xs-9">
-                                    <p data-bind="text: name"></p>
-                                    <p data-bind="text: type"></p>
-                                </div>
-                            </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- Mobile results block -->
-        <div>
-            <button id="mobileResultsButton" class="btn btn-primary btn-lg btn-block" data-bind="click: mobileToggle">Results</button>
-        </div>   
-        <!-- end Map Canvas-->
-        <!--Start Beer Modal-->
-        <div data-bind="modal: { header: {data: { label: selectedBreweryName } }, body: { name: 'beerModalTemplate', foreach: beers }, visible: beerModalVisible }">
-        </div>
         <!-- Beer Modal Content Template -->
-        <script type="text/html" id="beerModalTemplate">
+<!--         <script type="text/html" id="beerModalTemplate">
             <ul>
                 <h6 data-bind="text: name"></h6>
                 <p data-bind="text: styleShortName"></p>
                 <p data-bind="text: ibu"></p>
                 <p data-bind="text: year"></p>
             </ul>
-        </script>
+        </script> -->
   
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

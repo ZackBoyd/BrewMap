@@ -38,7 +38,7 @@ var mapInit = function(){
     clearTimeout(self.mapRequestTimeout);
     //Create infowindow and save to global infowindow variable to temporarily store content for markers
     infowindow = new google.maps.InfoWindow({maxWidth: 400});
-    appViewModel().getUserLocation();
+    // appViewModel().getUserLocation();
 };
 
 //------------------//
@@ -350,7 +350,7 @@ var appViewModel = function() {
 //------------------------------//
 //BEER SEARCH AND VIEW FUNCTIONS//
 //------------------------------//
-    //Shwo the beer modal for the selected brewery
+    //Show the beer modal for the selected brewery
     self.showBeerModal = function (){
         self.beerModalVisible(true);
     };
